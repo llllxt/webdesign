@@ -1,0 +1,212 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+/*navigator*/
+.nav ul {
+  list-style: none;
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+  .nav li {
+    width: 130px;
+    border-bottom: none;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1em;
+    display: inline-block;
+    margin-right: -4px;
+  }
+
+  .nav a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    border-bottom: 1px solid #888;
+    transition: .3s background-color;
+    border-bottom: 1px;
+  }
+
+  .nav > ul > li {
+    text-align: center;
+  }
+
+  .nav > ul > li > a {
+    padding-left: 0;
+  }
+
+  /* Sub Menus */
+  .nav li ul {
+    position: absolute;
+    display: none;
+    width: inherit;
+  }
+  .nav li:hover{
+    font-weight: bold;
+  }
+
+  .nav li:hover ul {
+    display: block;
+    background-color: #FFF;
+    box-shadow: 10px;
+    border: 1px solid;
+    font-weight: normal;
+    z-index: 1;
+  }
+  .nav li ul li {
+    display: block;
+  }
+
+/*top bar*/
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.topbar{
+	overflow:hidden;
+	background-color: #f5f5f5;
+}
+.topbar input[type=text] {
+	padding:3px;
+	vertical-align: middle;
+	margin-right: 16px;
+	font-size:17px;
+	background:url(../img/search.png) no-repeat scroll 7px 7px;
+  background-size: 20px;
+  background-position: left;
+	padding-left: 30px;
+  border: 1px solid;
+  border-radius: 10px;
+
+}
+
+.right{
+  float:right;
+}
+.header{
+  width: 50%;
+  margin:auto;
+}
+
+/******slideshow*******/
+.slide-container{
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+/*hide image (default)*/
+.slide{
+  display: none;
+}
+
+
+.slide img{
+  height: 400px;
+}
+
+/*need help*/
+.needhelp{
+  background-color: #f5f5f5;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+/*the container must be positioned relative:*/
+.custom-select {
+  position: relative;
+  width:200px;
+  border: 1px solid;
+
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+
+
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: black transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #000000 transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: black;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color:  white;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.needhelp button{
+  border: 1px solid;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+footer{
+  margin-top: 20px;
+  background-color: #f5f5f5;
+}
+footer ul{
+  text-align: left;
+  list-style-type: none;
+  display: inline-block;
+  vertical-align: top;
+  margin:50px;
+}
+
+
+footer a{
+  color: black;
+  text-decoration: none;
+  font-size: 0.8em;
+}
+
+/***************         product.php           ****************/
+.filter{
+  display: inline-block;
+  width: 100px;
+  border: none;
+}
+
