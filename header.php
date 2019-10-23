@@ -2,8 +2,8 @@
   <div class="topbar">
     <div class="right">
     <input type="text" placeholder="Search">
-    <img src="img/login.png" id="login" alt="Login" style="width: 20px;height: 20px; vertical-align: middle;">
-    <img src="img/cart.png" id="cart" alt="Cart" style="width: 30px;height: 30px; vertical-align: middle;">
+    <a href="login.php"><img src="img/login.png" id="login" alt="Login" style="width: 20px;height: 20px; vertical-align: middle;">
+    <a href="cart.php"><img src="img/cart.png" id="cart" alt="Cart" style="width: 30px;height: 30px; vertical-align: middle;">
   </div>
   </div>
   <!-- Header -->

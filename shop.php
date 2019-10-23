@@ -40,7 +40,6 @@
         }
         
 
-
         echo '
         <div class="slide-container">
 		    <div class="slide">
@@ -58,7 +57,7 @@
 
         echo'
          <div class="filterbar"  style="width:50%; margin-left: auto;margin-right: auto; float: left;">
-		<div class="custom-select filter">     
+		<d1iv class="custom-select filter">     
 		      <select id="color" >
 		        <option value="0">color</option>
 		        <option value="1">Pink</option>
