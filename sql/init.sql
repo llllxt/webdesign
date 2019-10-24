@@ -54,13 +54,13 @@ CREATE TABLE bank_simulation (
   name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE banner{
+CREATE TABLE banner(
   id int unsigned auto_increment primary key,
   img1 varchar(255) not null,
   img2 varchar(255) not null,
   img3 varchar(255) not null,
   category varchar(255) not null
-}
+) 
 
 INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("John","Smith","JohnSmith@gmail.com","John1234567","1996-05-10");
 INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("Tony","Robbins","Tony123@gmail.com","Tony1234567","1960-02-19");
@@ -85,8 +85,8 @@ VALUES(
   50,
   "Multi",
   "Hobbies & Passions",
-  "/Users/lixintong/Documents/webimgs/798320ENMX_RGB.jpeg",
-  "/Users/lixintong/Documents/webimgs/798320ENMX_ABC123_MODEL_ECOM_RGB.jpeg"
+  "img/798320ENMX_RGB.jpeg",
+  "img/798320ENMX_ABC123_MODEL_ECOM_RGB.jpeg"
 ),
 (
 2,
@@ -98,8 +98,8 @@ VALUES(
 50,
 "Multi",
 "Fairytale",
-"/Users/lixintong/Documents/webimgs/798232CZ_RGB.jpeg",
-"/Users/lixintong/Documents/webimgs/798232CZ_ABC123_MODEL_ECOM_RGB.jpeg"
+"img/798232CZ_RGB.jpeg",
+"img/798232CZ_ABC123_MODEL_ECOM_RGB.jpeg"
 ),
 (
 3,
@@ -111,8 +111,8 @@ VALUES(
 50,
 "Multi",
 "Love & Romance",
-"/Users/lixintong/Documents/webimgs/787801NBP_RGB.jpeg",
-"/Users/lixintong/Documents/webimgs/787801NBP_ABC123_MODEL_ECOM_RGB.jpeg"
+"img/787801NBP_RGB.jpeg",
+"img/787801NBP_ABC123_MODEL_ECOM_RGB.jpeg"
 ),
 (
   4,
@@ -124,8 +124,8 @@ VALUES(
   50,
   "Silver",
   "Alphabet & Numbers",
-  "/Users/lixintong/Documents/webimgs/798203_RGB.jpeg",
-  "/Users/lixintong/Documents/webimgs/798203_ABC123_MODEL_ECOM_RGB.jpeg"
+  "img/798203_RGB.jpeg",
+  "img/798203_ABC123_MODEL_ECOM_RGB.jpeg"
 ),
 (
   5,
@@ -137,8 +137,8 @@ VALUES(
   50,
   "Clear",
   "Flowers & Nature",
-  "/Users/lixintong/Documents/webimgs/768000CZ_RGB.jpeg",
-  "/Users/lixintong/Documents/webimgs/768000CZ_V2_RGB.jpeg"
+  "img/768000CZ_RGB.jpeg",
+  "img/768000CZ_V2_RGB.jpeg"
 ),
 (
 6,
@@ -150,8 +150,8 @@ VALUES(
 50,
 "Golden",
 "Flowers & Nature",
-"/Users/lixintong/Documents/webimgs/787897_RGB.jpeg",
-"/Users/lixintong/Documents/webimgs/787897_ABC123_MODEL_ECOM_RGB.jpeg"
+"img/787897_RGB.jpeg",
+"img/787897_ABC123_MODEL_ECOM_RGB.jpeg"
 ),
 (
   7,
@@ -163,8 +163,8 @@ VALUES(
   50,
   "Silver",
   "Love & Romance",
-  "/Users/lixintong/Documents/webimgs/397177_RGB.jpeg",
-  "/Users/lixintong/Documents/webimgs/397177_ABC123_MODEL_eCOM_02_RGB.jpeg"
+  "img/397177_RGB.jpeg",
+  "img/397177_ABC123_MODEL_eCOM_02_RGB.jpeg"
 ),
 (
 8,
@@ -176,8 +176,8 @@ VALUES(
 50,
 "Silver",
 "Love & Romance",
-"/Users/lixintong/Documents/webimgs/396581CZ_RGB.jpeg",
-"/Users/lixintong/Documents/webimgs/396581CZ_ABC123_MODEL_eCOM_01_RGB.jpeg"
+"img/396581CZ_RGB.jpeg",
+"img/396581CZ_ABC123_MODEL_eCOM_01_RGB.jpeg"
 ),
 (
 9,
@@ -189,8 +189,8 @@ VALUES(
 50,
 "Gold",
 "Flower & Nature",
-"/Users/lixintong/Documents/webimgs/387277_RGB.jpeg",
-"/Users/lixintong/Documents/webimgs/387277_ABC123_MODEL_eCOM_01_RGB.jpeg"
+"img/387277_RGB.jpeg",
+"img/387277_ABC123_MODEL_eCOM_01_RGB.jpeg"
 ),
 (
 10,
@@ -202,8 +202,8 @@ VALUES(
 50,
 "Gold",
 "Flower & Nature",
-"/Users/lixintong/Documents/webimgs/387299_RGB.jpeg",
-"/Users/lixintong/Documents/webimgs/387299_ABC123_MODEL_eCOM_01_RGB.jpeg"
+"img/387299_RGB.jpeg",
+"img/387299_ABC123_MODEL_eCOM_01_RGB.jpeg"
 ),
 (
 11,
@@ -215,8 +215,8 @@ VALUES(
 50,
 "Gold",
 "Flower & Nature",
-"/Users/lixintong/Documents/webimgs/380523CZ_RGB.jpeg",
-"/Users/lixintong/Documents/webimgs/380523CZ_ABC123_MODEL_eCOM_01_RGB.jpeg"
+"img/380523CZ_RGB.jpeg",
+"img/380523CZ_ABC123_MODEL_eCOM_01_RGB.jpeg"
 ),
 (
 12,
@@ -228,8 +228,8 @@ VALUES(
 50,
 "Silver",
 "Love & Romance",
-"/Users/lixintong/Documents/webimgs/397719_RGB.jpeg",
-"/Users/lixintong/Documents/webimgs/397719_ABC123_MODEL_eCOM_01_RGB.jpeg"
+"img/397719_RGB.jpeg",
+"img/397719_ABC123_MODEL_eCOM_01_RGB.jpeg"
 ),
 (
   13,
@@ -241,8 +241,8 @@ VALUES(
   50,
   "Clear",
   "Flowers & Nature",
-  "/Users/lixintong/Documents/webimgs/186316CZ_RGB.jpeg",
-  "/Users/lixintong/Documents/webimgs/186316CZ_ABC123_MODEL_eCOM_01_RGB.jpeg"
+  "img/186316CZ_RGB.jpeg",
+  "img/186316CZ_ABC123_MODEL_eCOM_01_RGB.jpeg"
 ),
 (
 14,
@@ -254,8 +254,8 @@ VALUES(
 50,
 "Clear",
 "",
-"/Users/lixintong/Documents/webimgs/196250CZ_RGB.jpeg",
-"/Users/lixintong/Documents/webimgs/196250CZ_MODEL_eCom_01_RGB.jpeg"
+"img/196250CZ_RGB.jpeg",
+"img/196250CZ_MODEL_eCom_01_RGB.jpeg"
 ),
 (
   15,
@@ -267,8 +267,8 @@ VALUES(
   50,
   "Clear",
   "",
-  "/Users/lixintong/Documents/webimgs/180947CZ_RGB.jpeg",
-  "/Users/lixintong/Documents/webimgs/180947CZ_V2_RGB.jpeg"
+  "img/180947CZ_RGB.jpeg",
+  "img/180947CZ_V2_RGB.jpeg"
 
 ),
 (
@@ -281,8 +281,8 @@ VALUES(
   50,
   "Clear",
   "",
-  "/Users/lixintong/Documents/webimgs/187736CZ_RGB.jpeg",
-  "/Users/lixintong/Documents/webimgs/187736CZ_ABC123_MODEL_ECOM_RGB.jpeg"
+  "img/187736CZ_RGB.jpeg",
+  "img/187736CZ_ABC123_MODEL_ECOM_RGB.jpeg"
 ),
 (
   17,
@@ -294,8 +294,8 @@ VALUES(
   50,
   "Clear",
   "",
-  "/Users/lixintong/Documents/webimgs/198282CZ_RGB.jpeg",
-  "/Users/lixintong/Documents/webimgs/198282CZ_ABC123_MODEL_ECOM_RGB.jpeg"
+  "img/198282CZ_RGB.jpeg",
+  "img/198282CZ_ABC123_MODEL_ECOM_RGB.jpeg"
 );
 
 
