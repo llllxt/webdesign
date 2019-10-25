@@ -1,9 +1,11 @@
 <header>
   <div class="topbar">
     <div class="right">
-    <input type="text" placeholder="Search">
+    <form action="shop.php" method="get">
+    <input name="searchstring" type="text" placeholder="Search">
     <img src="img/login.png" id="login" alt="Login" style="width: 20px;height: 20px; vertical-align: middle;">
     <img src="img/cart.png" id="cart" alt="Cart" style="width: 30px;height: 30px; vertical-align: middle;">
+  </form>
   </div>
   </div>
   <!-- Header -->
@@ -15,20 +17,20 @@
   <div class="nav">
         <ul>
           <li class="home"><a href="index.php">Home</a></li>
-          <li class="Charms"><a href="shop.php?category=charm">Charms</a>
+          <li class="Charms"><a href="shop.php?category=Charms">Charms</a>
             <ul>
               <li><a href="#">Dangle Charms</a></li>
               <li><a href="#">Spacer Charms</a></li>
               <li><a href="#">Clips</a></li>
             </ul>
           </li>
-          <li class="Necklaces"><a href="shop.php?category=necklace">Necklaces</a>
+          <li class="Necklaces"><a href="shop.php?category=Necklaces">Necklaces</a>
             <ul>
               <li><a href="#">Locket Necklace</a></li>
               <li><a href="#">Chain Necklace</a></li>
             </ul>
           </li>
-          <li class="Rings"><a  href="shop.php?category=ring">Rings</a>
+          <li class="Rings"><a  href="shop.php?category=Rings">Rings</a>
             <ul>
               <li><a href="#">Promise Rings</a></li>
               <li><a href="#">Silver Rings</a></li>

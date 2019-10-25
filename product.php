@@ -23,7 +23,7 @@ echo '<img class="center" id="img_'.$product_id.'" src='.$product_image.' alt="p
 		</p>
 	</div>
 	<?php 
-	if($product_discount>0){
+	if($product_discount<1){
 		echo '<div class="pre_price">';
 		echo '$' .number_format($product_price,2);
 		echo '</div>';

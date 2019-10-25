@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,7 +78,6 @@ a{
 <body>
 <div class="wrapper">
   <?php
-    // session_start();
     $conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
     if($conn->connection_error){
       include_once("error.php");
@@ -83,6 +85,9 @@ a{
     }
     include 'header.php';
     $category = $_GET['category'];
+    if($category){
+      $_SESSION['category'] = $category;
+    }
     include 'slideshow.php';  
  ?>
 
@@ -96,45 +101,43 @@ if(isset($_GET['color'])){
 if(isset($_GET['price'])){
   $price = $_GET['price'];
 }
-if(isset($GET['theme'])){
+if(isset($_GET['theme'])){
   $theme = $_GET['theme'];
 }
 echo '
 <div class="filter">   
 <form>  
       <select name="color" class="dropdown" id="color" onchange="this.form.submit()">
-        <option value="0" disabled selected'.($color=="0"?' selected' : '').'>COLOR</option>
-        <option value="1"'.($color=="1"?' selected' : '').'>Pink</option>
-        <option value="2"'.($color=="2"?' selected' : '').'>Blue</option>
-        <option value="3"'.($color=="3"?' selected' : '').'>Red</option>
-        <option value="4"'.($color=="4"?' selected' : '').'>Multicolor</option>
+        <option value="all"'.($color=="all"?' selected' : '').'>COLOR</option>
+        <option value="Silver"'.($color=="Silver"?' selected' : '').'>Silver</option>
+        <option value="Golden"'.($color=="Golden"?' selected' : '').'>Golden</option>
+        <option value="Clear"'.($color=="Clear"?' selected' : '').'>Clear</option>
+        <option value="Multi"'.($color=="Multi"?' selected' : '').'>Multicolor</option>
       </select>
-    </form>
  </div>
  <div class="filter" > 
- <form>   
-      <select id="price" class="dropdown" onchange="this.form.submit()">
-      <option value="0" disabled selected'.($price=="0"?' selected' : '').'>PRICE</option>
-      <option value="1"'.($price=="1"?' selected' : '').'>0-50</option>
-      <option value="2"'.($price=="2"?' selected' : '').'>50-100</option>
-      <option value="3"'.($price=="3"?' selected' : '').'>100-150</option>
-      <option value="4"'.($price=="4"?' selected' : '').'>150-200</option>
-      <option value="5"'.($price=="5"?' selected' : '').'>200+</option>
+
+      <select name="price" id="price" class="dropdown" onchange="this.form.submit()">
+      <option value="all" '.($price=="all"?' selected' : '').'>PRICE</option>
+      <option value="1"'.($price=="1"?' selected' : '').'>1-50</option>
+      <option value="50"'.($price=="50"?' selected' : '').'>50-100</option>
+      <option value="100"'.($price=="100"?' selected' : '').'>100-150</option>
+      <option value="150"'.($price=="150"?' selected' : '').'>150-200</option>
+      <option value="250"'.($price=="200"?' selected' : '').'>200+</option>
     </select>
-  </form>
  </div>
  <div class="filter" > 
- <form>    
-      <select id="theme" class="dropdown" onchange="this.form.submit()">
-        <option value="0" disabled selected'.($theme=="0"?' selected' : '').'>THEME</option>
-        <option value="1"'.($theme=="1"?' selected' : '').'>Career Aspiration</option>
-        <option value="2"'.($theme=="2"?' selected' : '').'>Animals &amp; Pets</option>
-        <option value="3"'.($theme=="3"?' selected' : '').'>Firytale</option>
-        <option value="4"'.($theme=="4"?' selected' : '').'>Flower &amp; nature</option>
-        <option value="5"'.($theme=="5"?' selected' : '').'>Love &amp; Romance</option>
-      </select>
-    </form>
+  
+      <select name="theme" id="theme" class="dropdown" onchange="this.form.submit()">
+        <option value="all" '.($theme=="all"?' selected' : '').'>THEME</option>
+        <option value="Hobbies & Passions"'.($theme=="Hobbies & Passions"?' selected' : '').'>Hobbies &amp; Passions</option>
+        <option value="Fairytale"'.($theme=="Fairytale"?' selected' : '').'>Fairytale</option>
+        <option value="Alphabet & Numbers"'.($theme=="Alphabet & Numbers"?' selected' : '').'>Alphabet &amp; Numbers</option>
+        <option value="Flowers & Nature"'.($theme=="Flowers & Nature"?' selected' : '').'>Flower &amp; nature</option>
+        <option value="Love & Romance"'.($theme=="Love & Romance"?' selected' : '').'>Love &amp; Romance</option>
+      </select> 
  </div>
+  </form>
 </div>
 <div>
   <p></p>
@@ -146,27 +149,70 @@ echo '
     $page = isset($_GET['page'])?$_GET['page']:1;
     //calculate offset through page and pagesize
     $offset = $pageSize*($page-1);
-    // $pageIndex = 0;
+    
 
-    $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE category="'.$category.'" ';
+    //search function implementation
+    $query = 'SELECT COUNT(id) AS totalrows FROM products';
+    echo $_GET['searchstring'];
+
+    if($_SESSION['category'] != "home"){
+      $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE category="'.$_SESSION['category'].'" ';
+    }else if(isset($_GET['searchstring'])){
+      $query = $query . ' WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
+      echo $query;    
+    }
 
     $result = $conn->query($query);
     $row = $result->fetch_assoc();
     $result->free();
+    
+    //filter in product page
+    if($_SESSION['category'] != 'home'){
+      $query = 'SELECT * FROM products WHERE category="'.$_SESSION['category'].'" ';
+    if($_GET['color'] && $_GET['color'] != "all"){
+      $query=$query . ' AND color = "' .$_GET['color'] .'"';
+    }
+    if($_GET['theme'] && $_GET['theme'] != "all"){
+      $query = $query. ' AND theme = "' . $_GET['theme'] . '"';
+    }
+    if($_GET['price'] && $_GET['price'] != "all"){
+      $max = (int)$_GET['price']+50;
+      $query = $query . ' AND price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
+    }
+    }else if(isset($_GET['searchstring'])){
 
-    $query = 'SELECT * FROM products WHERE category="'.$category.'" ';
+      $query ='SELECT * FROM products WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
+      echo $query;
+    }
+    //filter in home page
+    else{
+      $query = 'SELECT * FROM products';
 
-
-    foreach ($_GET as $param_name => $param_val){
-      if($param_name == 'color' || $param_name == 'theme'){
-        $query = $query . ' AND (';        
-        foreach($param_val as $val){          
-            $query = $query . $param_name . '="' . $val . '"';         
-        }
-      }else if($param_name == 'price'){
-        $query = $query . $param_name . 'BETWEEN' . $val[0] . 'AND' .$val[1];
+    if($_GET['theme'] && $_GET['theme'] != "all"){
+      if(! ($_GET['price'] && $_GET['price'] != "all")){
+        $query = $query. ' WHERE theme = "' . $_GET['theme'] . '"';
+      }else{
+        $query = $query. ' AND theme = "' . $_GET['theme'] . '"';
       }
     }
+    if($_GET['price'] && $_GET['price'] != "all"){
+      $max = (int)$_GET['price']+50;
+      $query = $query . ' WHERE price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
+    }
+    }
+    
+
+    // foreach ($_GET as $param_name => $param_val){
+    //   if($param_name == 'color' || $param_name == 'theme'){
+    //     $query = $query . ' AND '; 
+    //     $query = $query . $param_name . '="' . $param_val . '"';  
+    //     echo $query;
+    //   }else if($param_name == 'price'){
+    //     $max = (int)$param_val+50;
+        
+    //     $query = $query . $param_name . ' BETWEEN ' . (int)$param_val . ' AND ' .$max;
+    //   }
+    // }
 
     $query = $query . ' LIMIT '.$offset.','.$pageSize;
     $result = $conn->query($query);

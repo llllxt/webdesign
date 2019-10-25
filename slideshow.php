@@ -4,7 +4,7 @@ if($conn->connection_error){
 	include_once("error.php");
 	exit();
 }
-$query = 'SELECT img1,img2,img3 FROM banner WHERE category="'.$category.'"';
+$query = 'SELECT img1,img2,img3 FROM banner WHERE category="'.$_SESSION['category'].'"';
 $result = $conn -> query($query);
 $row = $result -> fetch_assoc();
 $img1 = $row['img1'];

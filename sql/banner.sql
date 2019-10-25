@@ -10,17 +10,17 @@ INSERT INTO banner(img1,img2,img3,category) VALUES(
 	"img/slides/slide_charm1.jpg",
 	"img/slides/slide_charm2.jpg",
 	"img/slides/slide_charm3.jpg",
-	"charm"
+	"Charms"
 ),
 (
 	"img/slides/slide_ring1.jpg",
 	"img/slides/slide_ring2.jpg",
 	"img/slides/slide_ring3.jpg",
-	"ring"
+	"Rings"
 ),
 (
 	"img/slides/slide_necklace1.jpg",
 	"img/slides/slide_necklace2.jpg",
 	"img/slides/slide_necklace3.jpg",
-	"necklace"
+	"Necklaces"
 );
