@@ -66,9 +66,7 @@
 	color: white;
 	padding: 7px 30px;
 	font-size: 12px;
-	float: right;
-
-	
+	float: right;	
 }
 
 .grey_add{
@@ -77,7 +75,6 @@
 	padding: 7px 30px;
 	font-size: 12px;
 	float: middle;
-
 }
 
 </style>
@@ -106,7 +103,6 @@
 		if (isset($_GET['quantity']) && $_GET['quantity']>0){
 			$sql1 = 'INSERT INTO shopping_cart (customer_id,product_id,item_quantity) VALUES ( '.$user_id.', '.$product_id.', '.$_GET['quantity'].' )';
 			if (mysqli_query($conn, $sql1)) {
-				echo 'Item has been added to shopping cart.';
 				//echo "New record created successfully";
 			} else {
 				//echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
@@ -162,7 +158,7 @@
 		
         //check if the product is in stock, if it is in stock, we show the add to bag button
 		//if not, we disable add to bag button and show notify me buttom.
-		if ($row['stock']>=1) {
+		if ($row['stock']<1) {
 			echo '
 				<form  action="detail.php" method="get">
 				<div> 
@@ -170,7 +166,7 @@
 				</div>
 
 				<div>
-					<input type="submit" class ="green_add" name="submit" value="Add to Bag">
+					<input type="submit" class ="green_add" name="submit" onclick="notify()" value="Add to Bag">
 				</div>
 				</form>';
 				
@@ -181,7 +177,8 @@
 					The item you have chosed is out of stock. You can join in our waiting list!
 				</div>
 				<div>
-					<br><button class ="green_add" type="submit" form="form1" value="Submit"><b>Join waiting list</b></button>
+
+					<br><input type="submit" class ="green_add" onclick="joinInWaitList()" value="Join waiting list">
 				</div>';
 		}
 		
@@ -201,7 +198,24 @@
 	<div class="center" style="text-align: center; margin-top:100px; margin-bottom:40px"><h2>DISCOVER MORE</h2>
 	<button class="grey_add" onclick="location.href='index.php'" type="button"><b>Shop Here</b></button> <br><br></div>
 </body>
+<script>
 
+//checking the input number of items and notify the user
+function notify(){
+	quantity = document.getElementById("quantity");
+
+	if (quantity<=0){
+		alert("Please input an positive number!");
+	}else{
+	alert("Item has been added to shopping bag");
+	}
+}
+
+function joinInWaitList(){
+	//can add function to send email to user!
+	alert("You are now in the waiting list!");
+}
+</script>
 <?php include 'footer.php';  ?> 
 
 </html>
