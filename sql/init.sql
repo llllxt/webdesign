@@ -79,11 +79,6 @@ INSERT INTO discount (product_id, discount) VALUES (1,0.9);
 INSERT INTO discount (product_id, discount) VALUES (4,0.8);
 INSERT INTO discount (product_id, discount) VALUES (5,0.7);
 
-INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (1,3,2);
-INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (1,2,1);
-INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (2,3,1);
-INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (1,5,2);
-
 -- INSERT INTO banner (img1,img2,img3,category) VALUES(
 
 -- )

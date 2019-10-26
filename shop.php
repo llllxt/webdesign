@@ -72,7 +72,7 @@ a{
 <body>
 <div class="wrapper">
   <?php
-    $conn = new mysqli("127.0.0.1", "root", "xxxx","f34ee");
+    $conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
     if($conn->connection_error){
       include_once("error.php");
       exit();
