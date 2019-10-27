@@ -29,31 +29,9 @@
 .text1{
 text-align: center;
 position: relative;
-margin-top:200px;
+margin-top:100px;
 margin-bottom:50px;
 
-}
-
-.parent {
-  position: relative;
-  top: 0;
-  left: 0;
-  margin-left:10%;
-  margin-right:10%;
-
-
-}
-.image2 {
-  position: absolute;
-  top: 350px;
-  left: 0px;
-  width:400px;
-}
-.image3 {
-  position: relative;
-  top: 30px;
-  left: 480px;
-  width:500px;
 }
 
 
@@ -67,18 +45,17 @@ margin-bottom:50px;
 	width:auto; 
 	margin:0 auto; 
 	padding:0; 
-	min-width:1300px; 
 	text-align:center;
 }
 .img-content ul li{
-	display:inline-block
+	display:inline-block;
 }
 
 .img-content ul li img{
 	display: block;
-	width:400px; 
-	height:400px; 
-	padding:0 10px
+	width:250px; 
+	height:250px; 
+	padding:20px ;
 }
 
 </style>
@@ -99,14 +76,16 @@ margin-bottom:50px;
 
 	<div>
 		<h1 class="text1">We give a voice to people's love</h1>
-		<div class="parent">
-			<img src="img/about2.jpg" class="image2">
-			<img src="img/about3.jpg" class="image3">
-			<img src="img/about4.jpg" class="image4">
+		<div class="img-content">
+			<ul>
+			<li><img src="img/about2.jpg" ></li>
+			<li><img src="img/about3.jpg" ></li>
+			<li><img src="img/about4.jpg" ></li>
+		</ul>
 		</div>
 	</div>
 
-	<div style="margin-bottom: 200px;background-color: pink;padding-bottom:10px;">
+	<div style="background-color: pink;">
 		<h1 class="text1"><br>A university of jewellery and opportunities for self-expression</h1>
 		<div class="img-content">
 			<ul>
@@ -116,7 +95,6 @@ margin-bottom:50px;
 			</ul>
 		</div>
 	</div>
-	
 
 
 </body>
