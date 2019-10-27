@@ -4,84 +4,121 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/style.css">
 <style>
-.column{
-  margin-top: 50px;
-  float: left;
-  text-align: center;
 
-}
-.leftpart{
-  width:30%;
-  text-align: left;
-  margin-left:100px;
-  min-width: 400px;
-
+/* Container holding the image and the text */
+.container {
+  position: relative;
+  margin-bottom: 100px;
 
 }
 
-.rightpart{
-  width:60%;
-  margin-right:30px;
-  min-width: 650px;
-  
-  
-}
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.wrapper{
-	width:100%;
-	min-width: 1800px;
-	float: center; 
-	display: block;
-  
-
-	
-}
-.red{
-	color: red;
-}
-.button{
-	background-color: #4CAF50; /* Green */
-  border: none;
+/* Bottom right text */
+.text-block {
+  position: absolute;
+  bottom: -20px;
+  right: 20px;
+  background-color: #FFB6C1;
   color: white;
-  padding: 30px 70px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  margin: 30px 70px;
-  cursor: pointer;
-	
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left:20px;
+  font-family: 'Lato', sans-serif; 
 
 }
-.green_add{
-	background-color: #4CAF50;
-	color: white;
-	padding: 7px 30px;
-	font-size: 12px;
-	float: right;	
+
+.text1{
+text-align: center;
+position: relative;
+margin-top:200px;
+margin-bottom:50px;
+
 }
 
-.grey_add{
-	background-color:#e7e7e7;
-	color: black;
-	padding: 7px 30px;
-	font-size: 12px;
-	float: middle;
+.parent {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-left:10%;
+  margin-right:10%;
+
+
+}
+.image2 {
+  position: absolute;
+  top: 350px;
+  left: 0px;
+  width:400px;
+}
+.image3 {
+  position: relative;
+  top: 30px;
+  left: 480px;
+  width:500px;
+}
+
+
+.image4 {
+  position: absolute;
+  top: 0px;
+  left: 1050px;
+  width:400px;
+}
+.img-content ul{
+	width:auto; 
+	margin:0 auto; 
+	padding:0; 
+	min-width:1300px; 
+	text-align:center;
+}
+.img-content ul li{
+	display:inline-block
+}
+
+.img-content ul li img{
+	display: block;
+	width:400px; 
+	height:400px; 
+	padding:0 10px
 }
 
 </style>
 </head>
 <?php  include 'header.php'; ?>
 <body>
-	<div style="text-align: center;"><h1> About Us </h1></div>
-
 	
+	<div style="text-align: center;">
+		<h1> About Us </h1>
+	</div>
+
+	<div class="container">
+		<img src="img/about1.jpg" alt="about1" style="width:100%;">
+  		<div class="text-block"> 
+    		<h3>Phoebe, manufactures and markets hand-finished and contemporary jewellery made from high-quality materials at affordable prices.</h3>
+  		</div>
+	</div>
+
+	<div>
+		<h1 class="text1">We give a voice to people's love</h1>
+		<div class="parent">
+			<img src="img/about2.jpg" class="image2">
+			<img src="img/about3.jpg" class="image3">
+			<img src="img/about4.jpg" class="image4">
+		</div>
+	</div>
+
+	<div style="margin-bottom: 200px;background-color: pink;padding-bottom:10px;">
+		<h1 class="text1"><br>A university of jewellery and opportunities for self-expression</h1>
+		<div class="img-content">
+			<ul>
+				<li><img src="img/about6.jpg" ></li>
+				<li><img src="img/about8.jpg" ></li>
+				<li><img src="img/about7.jpg" ></li>
+			</ul>
+		</div>
+	</div>
+	
+
+
 </body>
 
 <?php include 'footer.php';  ?> 
