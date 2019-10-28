@@ -1,4 +1,4 @@
-USE f34ee;
+   tft USE f34ee;
 
 CREATE TABLE customers (
   id int unsigned auto_increment primary key,

@@ -3,8 +3,9 @@
     <div class="right">
     <form action="shop.php" method="get">
     <input name="searchstring" type="text" placeholder="Search">
-    <img src="img/login.png" id="login" alt="Login" style="width: 20px;height: 20px; vertical-align: middle;">
-    <img src="img/cart.png" id="cart" alt="Cart" style="width: 30px;height: 30px; vertical-align: middle;">
+    <a href="login.php"><img style="width: 20px;height: 20px;vertical-align: middle;" src="img/login.png">
+    <a hred=""><img style="width: 30px;height: 30px;vertical-align: middle;" src="img/cart.png">
+  
   </form>
   </div>
   </div>

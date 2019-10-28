@@ -43,7 +43,7 @@ session_start();
 
 <body>
 <div id="wrapper">
-<?php 
+ <?php 
 include 'header.php'; ?>
   <!-- Slideshow -->
 
@@ -118,8 +118,8 @@ echo '
 
   <script type="text/javascript" src='javascript/slide.js'></script>
   <script type="text/javascript" src='javascript/filter.js'></script>
-
+<?php include 'footer.php'; ?>
 </div>
 </body>
-<?php include 'footer.php'; ?>
+
 </html>
