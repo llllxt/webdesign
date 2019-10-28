@@ -22,7 +22,6 @@ a{
     text-decoration-color: none;
     text-decoration: none;
   }
-
 .container {
   display: flex;
   max-width: 100%;
@@ -55,8 +54,6 @@ a{
   width:33%;
   height: 33%;
   display: inline-block;
-
-
 }
 .center {
   display: block;
@@ -64,21 +61,18 @@ a{
   margin-right: auto;
   width: 90%;
 }
-
 .textcenter{
   text-align: center;
   margin-left: auto;
   margin-right: auto;
   width: 80%;
-
 }
-
 </style>
 </head>
 <body>
 <div class="wrapper">
   <?php
-    $conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
+    $conn = new mysqli("127.0.0.1", "root", "xxxx","f34ee");
     if($conn->connection_error){
       include_once("error.php");
       exit();
@@ -116,7 +110,6 @@ echo '
       </select>
  </div>
  <div class="filter" > 
-
       <select name="price" id="price" class="dropdown" onchange="this.form.submit()">
       <option value="all" '.($price=="all"?' selected' : '').'>PRICE</option>
       <option value="1"'.($price=="1"?' selected' : '').'>1-50</option>
@@ -144,24 +137,20 @@ echo '
 <br>
 </div>
 ';
-
     $pageSize = 6;
     $page = isset($_GET['page'])?$_GET['page']:1;
     //calculate offset through page and pagesize
     $offset = $pageSize*($page-1);
     
-
     //search function implementation
     $query = 'SELECT COUNT(id) AS totalrows FROM products';
     echo $_GET['searchstring'];
-
     if($_SESSION['category'] != "home"){
       $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE category="'.$_SESSION['category'].'" ';
     }else if(isset($_GET['searchstring'])){
       $query = $query . ' WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
       echo $query;    
     }
-
     $result = $conn->query($query);
     $row = $result->fetch_assoc();
     $result->free();
@@ -180,14 +169,12 @@ echo '
       $query = $query . ' AND price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
     }
     }else if(isset($_GET['searchstring'])){
-
       $query ='SELECT * FROM products WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
       echo $query;
     }
     //filter in home page
     else{
       $query = 'SELECT * FROM products';
-
     if($_GET['theme'] && $_GET['theme'] != "all"){
       if(! ($_GET['price'] && $_GET['price'] != "all")){
         $query = $query. ' WHERE theme = "' . $_GET['theme'] . '"';
@@ -201,7 +188,6 @@ echo '
     }
     }
     
-
     // foreach ($_GET as $param_name => $param_val){
     //   if($param_name == 'color' || $param_name == 'theme'){
     //     $query = $query . ' AND '; 
@@ -213,7 +199,6 @@ echo '
     //     $query = $query . $param_name . ' BETWEEN ' . (int)$param_val . ' AND ' .$max;
     //   }
     // }
-
     $query = $query . ' LIMIT '.$offset.','.$pageSize;
     $result = $conn->query($query);
     if($result){
@@ -273,4 +258,3 @@ echo '
 <?php include 'footer.php'; ?>
 
 </html>
-

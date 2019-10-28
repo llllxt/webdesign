@@ -46,6 +46,13 @@ CREATE TABLE discount(
 
 );
 
+CREATE TABLE shopping_cart(
+  id  int unsigned not null auto_increment primary key,
+  customer_id  int not null,
+  product_id int not null,
+  item_quantity  int not null
+);
+
 CREATE TABLE bank_simulation (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   type BIT(1) NOT NULL,
@@ -61,7 +68,8 @@ CREATE TABLE banner(
   img2 varchar(255) not null,
   img3 varchar(255) not null,
   category varchar(255) not null
-) 
+);
+
 
 INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("John","Smith","JohnSmith@gmail.com","John1234567","1996-05-10");
 INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("Tony","Robbins","Tony123@gmail.com","Tony1234567","1960-02-19");
@@ -70,6 +78,11 @@ INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALU
 INSERT INTO discount (product_id, discount) VALUES (1,0.9);
 INSERT INTO discount (product_id, discount) VALUES (4,0.8);
 INSERT INTO discount (product_id, discount) VALUES (5,0.7);
+
+INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (1,3,2);
+INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (1,2,1);
+INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (2,3,1);
+INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (1,5,2);
 
 -- INSERT INTO banner (img1,img2,img3,category) VALUES(
 
