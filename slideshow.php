@@ -1,16 +1,21 @@
 <?php
-$conn = new mysqli("127.0.0.1", "root", "xxxx","f34ee");
+$conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
 if($conn->connection_error){
 	include_once("error.php");
 	exit();
 }
+if($subcat){
+$query = 'SELECT img1,img2,img3 FROM banner WHERE category="subcat"';
+
+}else{
 $query = 'SELECT img1,img2,img3 FROM banner WHERE category="'.$_SESSION['category'].'"';
+
+}
 $result = $conn -> query($query);
 $row = $result -> fetch_assoc();
 $img1 = $row['img1'];
 $img2 = $row['img2'];
 $img3 = $row['img3'];
-
 echo'
 <div class="slide-container">
     <div class="slide">

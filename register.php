@@ -23,13 +23,14 @@ if($row){
 	echo 'Email already exists';
 }else{
 	$query = 'INSERT INTO customers (first_name,last_name,email,password,dateofbirth) VALUES ("'.$firstname .'","' . $lastname . '","' .$email. '","' .$password. '","' .$dateofbirth. '")';
+	echo $query;
 	$result = $conn -> query($query);
   if(!$result){
   }else{
     $_SESSION['valid_user'] = $email;
     $_SESSION['success'] = "You are now logged in";
-    echo 'Welcome' .$firstname. '. You are now registered';
-    header('location:login.php');
+    echo 'Welcome ' .$firstname. '. You are now registered';
+    echo "<script>location.href='login.php';</script>";
   }
 	
 }
@@ -55,7 +56,6 @@ if($row){
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-
   }
   .input-group label{
     float:left; clear:left; width:150px; text-align: right; display: block; padding-right: 10px; margin-top: 10px;
@@ -67,7 +67,6 @@ if($row){
         margin-right: auto;
         margin-left: auto;
   }
-
   .submitbutton{
         padding: 5px;
         color: black;
@@ -75,8 +74,8 @@ if($row){
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
-
        }
+  
 
 
 	</style>

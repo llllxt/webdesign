@@ -21,13 +21,17 @@ echo '<img class="center" id="img_'.$product_id.'" src='.$product_image.' alt="p
 			echo '$'.number_format($price,2);
 			?>
 		</p>
-	</div>
-	<?php 
+		<?php 
 	if($product_discount<1){
-		echo '<div class="pre_price">';
-		echo '$' .number_format($product_price,2);
-		echo '</div>';
+		
+		echo '<del style="float:right;color:red">';
+		echo '                 $' .number_format($product_price,2);
+		echo '</del>';
+		
 	}
 	?>
+	</div>
+	
 </div>
+<br><br>
 </div>

@@ -142,13 +142,3 @@ footer a{
   width: 100px;
   border: none;
 }
-
-
-.submitbutton{
-        padding: 5px;
-        color: black;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-       }

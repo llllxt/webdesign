@@ -9,10 +9,21 @@ $myusername = $_POST['username'];
 $mypassword = $_POST['password'];
 $mypassword = md5($mypassword);
 echo $myusername;
-$query = 'SELECT id FROM customers WHERE email="'.$myusername. '" AND password="' . $mypassword .'"';
+$query = 'SELECT * FROM customers WHERE email="'.$myusername. '" AND password="' . $mypassword .'"';
 $result = $conn -> query($query);
+echo $result->num_rows; 
 if($result->num_rows > 0){
+	echo 'enter';
+	$row = $result->fetch_assoc();
+	echo $row;
+	foreach($row as $key => $value){
+		echo $key;
+		echo $value;
+	}
+	echo $row['first_name'];
 	$_SESSION['valid_user'] = $myusername;
+	$_SESSION['firstname'] = $row['first_name'];
+	$_SESSION['lastname'] = $row['last_name'];
 	echo "<script>location.href='welcome.php';</script>";
 }else if($myusername){
 	$error = 'Your username or password is invalid';

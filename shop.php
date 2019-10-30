@@ -67,12 +67,13 @@ a{
   margin-right: auto;
   width: 80%;
 }
+
 </style>
 </head>
 <body>
 <div class="wrapper">
   <?php
-    $conn = new mysqli("127.0.0.1", "root", "xxxx","f34ee");
+    $conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
     if($conn->connection_error){
       include_once("error.php");
       exit();
@@ -82,6 +83,7 @@ a{
     if($category){
       $_SESSION['category'] = $category;
     }
+    $subcat = $_GET['subcat'];
     include 'slideshow.php';  
  ?>
 
@@ -144,20 +146,33 @@ echo '
     
     //search function implementation
     $query = 'SELECT COUNT(id) AS totalrows FROM products';
-    echo $_GET['searchstring'];
-    if($_SESSION['category'] != "home"){
-      $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE category="'.$_SESSION['category'].'" ';
-    }else if(isset($_GET['searchstring'])){
-      $query = $query . ' WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
-      echo $query;    
+    if($subcat){
+      $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE sub_category="'.$subcat.'" ';
+    }else{
+        if($_SESSION['category'] != "home"){
+        $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE category="'.$_SESSION['category'].'" ';
+        }else if(isset($_GET['searchstring'])){
+        $query = $query . ' WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
     }
+    }
+  
     $result = $conn->query($query);
     $row = $result->fetch_assoc();
     $result->free();
+
     
+
+
     //filter in product page
-    if($_SESSION['category'] != 'home'){
-      $query = 'SELECT * FROM products WHERE category="'.$_SESSION['category'].'" ';
+    if($subcat){
+      $query = 'SELECT * FROM products WHERE sub_category="'.$subcat.'" ';
+    }else if($_SESSION['category'] != 'home'){
+      if($_SESSION['category'] == 'Sales'){
+        $query = 'SELECT * FROM products WHERE discount < 1';
+      }else{
+        $query = 'SELECT * FROM products WHERE category="'.$_SESSION['category'].'" ';
+      }
+      
     if($_GET['color'] && $_GET['color'] != "all"){
       $query=$query . ' AND color = "' .$_GET['color'] .'"';
     }
@@ -170,7 +185,6 @@ echo '
     }
     }else if(isset($_GET['searchstring'])){
       $query ='SELECT * FROM products WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
-      echo $query;
     }
     //filter in home page
     else{
@@ -187,6 +201,7 @@ echo '
       $query = $query . ' WHERE price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
     }
     }
+    echo $query;
     
     // foreach ($_GET as $param_name => $param_val){
     //   if($param_name == 'color' || $param_name == 'theme'){

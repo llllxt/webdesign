@@ -23,4 +23,18 @@ INSERT INTO banner(img1,img2,img3,category) VALUES(
 	"img/slides/slide_necklace2.jpg",
 	"img/slides/slide_necklace3.jpg",
 	"Necklaces"
+),
+(
+
+	"img/slides/slide_sale1.jpg",
+	"img/slides/slide_sale2.jpg",
+	"img/slides/slide_sale3.jpg",
+	"Sales"
+),
+(
+	"img/slides/slide_charm2.jpg",
+	"img/slides/slide_sale2.jpg",
+	"img/slides/slide_sale3.jpg",
+	"subcat"
+
 );
