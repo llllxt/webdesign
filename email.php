@@ -48,8 +48,8 @@
 
 <?php
 $servername = "127.0.0.1";
-$username = "root";
-$password = "xxxx";
+$username = "f34ee";
+$password = "f34ee";
 $db = "f34ee";
 
 // Create connection
@@ -59,25 +59,13 @@ $conn = mysqli_connect($servername, $username, $password, $db);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-
+$user_id = 1;
 
 $to      = 'f34ee@localhost';
 $subject = 'Order Confirmation';
-$message = 'Thanks for your ordering at Phoebe';
-'Thanks for your ordering at Phoebe';
-$message = '
-<html>
-<body>
-	<img src="img/header2.jpg" style="text-align: center;margin-bottom: 10px;">
-	<h3 style="text-align: center; margin-bottom: 30px;">Thanks for your ordering at Phoebe! <br></h3>
-	<h3 style="text-align: left; margin-bottom: 20px;">Order summary <br></h3>
-	<table border="0" class="table1">
-      <tr>
-        <th><h3>Product Description</h3></th>
-        <th><h3>Item Price</h3></th>
-        <th><h3>Quantity</h3></th>
-      </tr> 
-	';
+$message = 'Thanks for your ordering at Phoebe'."\n";
+
+$message .= 'Product Description / Item Price / Quantity'."\n";
 
 $sql = "SELECT product_id, item_quantity FROM shopping_cart WHERE customer_id = ". $user_id;
 $result = mysqli_query($conn, $sql);
@@ -91,44 +79,20 @@ if (mysqli_num_rows($result)> 0) {
       
       $price = $price+$row1['price']*$row['item_quantity'];
 
-      $message .= ' 
-      <tr>
-    
-      <th>
-        <div>
-          <img src='.$row1['image1'].' style="width: 120px; height: 120px" />
-        </div>
-        <table border="0" class="table">
-          <tr><th>'.$row1['name'].'</th> </tr>
-          <tr><td>Color:'.$row1['color'].'</td></tr>
-          <tr><td>Category:'.$row1['category'].'</td></tr>
-        </table> 
-      </th>
-      
-      <td> $'.$row1['price'].' </td>
 
-      <td>'.$row['item_quantity'].'</td>
- 
-      </tr> 
-       ';
-
+      $message .=  $row1['name'].' / '.$row1['price'].' / '.$row['item_quantity']."\n";
+	
   	}
 }
-
-$message .='
-  </table><br>
-  <div style="text-align:right; margin-right: 150px; margin-bottom: 50px; min-width:100px">
-      <b>Total Price: $'.$price.'</b>
-  </div>
-</body>
-</html>
-';
-
-$headers = 'From: f34ee@localhost' . "\r\n" .
+$message .='Total Price: $'.$price;
+$headers = 
+	'From: f34ee@localhost' . "\r\n" .
     'Reply-To: f34ee@localhost' . "\r\n" .
     'X-Mailer: PHP/' . phpversion();
 
-mail($to, $subject, $message, $headers,'-ff32ee@localhost');
+mail($to, $subject, $message, $headers,'-ff34ee@localhost');
+// check https://192.168.56.2:20000/
+
 ?> 
 
 </body>
