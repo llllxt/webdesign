@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
+$conn = new mysqli("127.0.0.1", "root", "xxxx","f34ee");
     if($conn->connection_error){
       include_once("error.php");
       exit();
@@ -135,6 +135,16 @@ label{
         margin-left: 40px;
 
        }
+  .wishlist:after{
+    content: "";
+  clear: both;
+  display: table;
+  }
+  .wishlist_img{
+    float: left;
+     width:50%;
+    height:50%;
+  }
 }
 
 </style>
@@ -160,6 +170,12 @@ include 'header.php'; ?>
   	<div id="right" style="width: 500px;">
   		<?php
   		$type = $_GET['type'];
+
+      $sql1= 'SELECT id FROM customers WHERE email = "'.$_SESSION['valid_user'].'"';
+      $result1 = mysqli_query($conn, $sql1);
+      $row1 = mysqli_fetch_assoc($result1);
+      $user_id = $row1['id'];
+
 
   		if(!$type || $type=="myaccount"){
   			echo '
@@ -206,7 +222,82 @@ include 'header.php'; ?>
 
   ';
 
-  	}
+  	}else if($type=="history"){
+    $history_order_num=0;
+    echo '<table border="0" style="margin-left:30px">';
+    
+
+     $sql2= 'SELECT id, date_order_placed, total_price from t_order WHERE customer_id = '.$user_id;
+     $result2 = mysqli_query($conn, $sql2);
+     if (mysqli_num_rows($result2)>0) {
+     
+     while($row2 = mysqli_fetch_array($result2)) {
+      $history_order_num++;
+       echo 
+       '<tr>
+       <div> <b>ORDER'.$history_order_num.'</b></div
+            <div style="float:right; margin-right:10px;margin-bottom:20px"> Order Time:'.$row2['date_order_placed'].'<br></div>
+        </tr>
+        ';
+        $sql3 = 'SELECT product_id, order_item_quantity, order_item_price FROM order_items WHERE order_id ='.$row2['id'];
+        $result3 = mysqli_query($conn, $sql3);
+        if (mysqli_num_rows($result3)>0) {
+        while($row3 = mysqli_fetch_array($result3)) {
+            $sql4 = 'SELECT name, price, image1, discount FROM products WHERE id = '.$row3['product_id'];
+            $result4 = mysqli_query($conn, $sql4);
+            $row4 = mysqli_fetch_assoc($result4);
+            echo '
+            <tr>
+              
+                <div style="width:20%;height:20%"><a href="detail.php?id='.$row3['product_id'].'"><img src= '.$row4['image1'].'></a></div>
+                <div> <b>'.$row4['name'].'</b></div>
+         
+              <div> Quantity: '.$row3['order_item_quantity'].' </div>
+              <div> Price: $'.$row4['price']*$row4['discount'].' </div>
+              <div> Sub Total: $'.$row3['order_item_price'].' </div>
+             
+            </tr>
+
+            '
+            ;
+          }
+
+        }
+         echo '
+         <tr>
+        <div style="float:right; margin-right:10px;margin-bottom:20px"><b>Total Price: $'.$row2['total_price'].'</b></div>
+        </tr>
+        <tr>
+        <div style="margin-bottom:20px;"> <hr> </div>
+        </tr>
+           ';
+      }
+    }
+    echo '</table>';
+
+  }else if($type=="wishlist"){
+
+    $sql2= 'SELECT product_id FROM wishlist WHERE customer_id = '.$user_id;
+    $result2 = mysqli_query($conn, $sql2);
+    if (mysqli_num_rows($result2)>0) {
+      echo '<div class="wishlist">';
+      while($row2 = mysqli_fetch_array($result2)) {
+        $sql3 = 'SELECT image1 FROM products WHERE id = '.$row2['product_id'];
+        $result3 = mysqli_query($conn, $sql3);
+        $row3 = mysqli_fetch_assoc($result3);
+
+        echo '
+        <div class="wishlist_img">
+        <a href="detail.php?id='.$row2['product_id'].'"><img src= '.$row3['image1'].'></a>
+        </div>
+
+        ';
+    }
+    echo '</div>';
+  }
+
+
+  }
   	?>
 
   	</div>
