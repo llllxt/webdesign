@@ -132,6 +132,7 @@ echo '
         <option value="Love & Romance"'.($theme=="Love & Romance"?' selected' : '').'>Love &amp; Romance</option>
       </select> 
  </div>
+ 
   </form>
 </div>
 <div>
@@ -183,25 +184,27 @@ echo '
       $max = (int)$_GET['price']+50;
       $query = $query . ' AND price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
     }
-    }else if(isset($_GET['searchstring'])){
+    }
+
+    else if(isset($_GET['searchstring'])){
       $query ='SELECT * FROM products WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
     }
     //filter in home page
     else{
       $query = 'SELECT * FROM products';
-    if($_GET['theme'] && $_GET['theme'] != "all"){
-      if(! ($_GET['price'] && $_GET['price'] != "all")){
-        $query = $query. ' WHERE theme = "' . $_GET['theme'] . '"';
-      }else{
-        $query = $query. ' AND theme = "' . $_GET['theme'] . '"';
-      }
-    }
-    if($_GET['price'] && $_GET['price'] != "all"){
+      if($_GET['price'] && $_GET['price'] != "all"){
       $max = (int)$_GET['price']+50;
       $query = $query . ' WHERE price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
+      }
+      if($_GET['theme'] && $_GET['theme'] != "all"){
+        if(! ($_GET['price'] && $_GET['price'] != "all")){
+          $query = $query. ' WHERE theme = "' . $_GET['theme'] . '"';
+        }else{
+          $query = $query. ' AND theme = "' . $_GET['theme'] . '"';
+        }
+      }
+    
     }
-    }
-    echo $query;
     
     // foreach ($_GET as $param_name => $param_val){
     //   if($param_name == 'color' || $param_name == 'theme'){
