@@ -25,7 +25,7 @@ CREATE TABLE products  (
 );
 
 CREATE TABLE  t_order  (
-   id  int unsigned  primary key,
+   id  int unsigned auto_increment primary key,
    customer_id  int not null,
    date_order_placed  datetime not null,
    total_price  float not null
@@ -77,7 +77,7 @@ CREATE TABLE wishlist(
 );
 
 
-INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("John","Smith","JohnSmith@gmail.com","John1234567","1996-05-10");
+INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("John","Smith","JohnSmith@gmail.com","John1234567","1996-05-10"); 
 INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("Tony","Robbins","Tony123@gmail.com","Tony1234567","1960-02-19");
 INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("Sara","Bareilles","Sara@gmail.com","Sara1234567@","1980-12-21");
 

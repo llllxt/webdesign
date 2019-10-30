@@ -53,7 +53,7 @@ if(isset($_POST['checkout'])){
    		while($row = mysqli_fetch_array($result)) {
       
 	        // get related  information about the product
-	    	$sql1 = "SELECT name,price,discount FROM products WHERE id = ".$row['product_id'];
+	    	$sql1 = "SELECT name,price,discount,stock FROM products WHERE id = ".$row['product_id'];
 	      	$result1 = mysqli_query($conn, $sql1);
 	      	$row1 = mysqli_fetch_assoc($result1);
 	      	$price = $price+$row1['price']*$row['item_quantity'];
@@ -74,6 +74,18 @@ if(isset($_POST['checkout'])){
 				//echo "not ok"."<br>";
 				//echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
 			}
+
+            $updated_stock = $row1['stock']-$row['item_quantity'];
+			//update the quantity in product table
+			$sql6='UPDATE products SET stock ='.$updated_stock.' WHERE id='.$row['product_id'];
+			echo $sql6."<br>";
+			if (mysqli_query($conn, $sql6)) {
+				echo "ok"."<br>";
+				
+			} else {
+				echo "Error: " . $sql6 . "<br>" . mysqli_error($conn);
+			}
+
 		} 
 
 		    // insert the total order amount to t_order table  -- ok tetsted
