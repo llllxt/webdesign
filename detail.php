@@ -39,10 +39,10 @@
 	color: red;
 }
 .button{
-	background-color: #4CAF50; /* Green */
+  background-color: #4CAF50; /* Green */
   border: none;
   color: white;
-  padding: 30px 70px;
+  padding: 30px 50px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -54,16 +54,21 @@
 .green_add{
 	background-color: #4CAF50;
 	color: white;
-	padding: 7px 30px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 	font-size: 12px;
-	float: right;	
+	float: right;
+	width:200px;
+	text-align: center;	
 }
 
 .grey_add{
 	background-color:#e7e7e7;
 	color: black;
-	padding: 7px 30px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 	font-size: 12px;
+	width:200px;
 	float: middle;
 }
 
@@ -111,12 +116,29 @@
 
         //validate input quantity and insert to shopping cart table
 		if (isset($_GET['quantity']) && $_GET['quantity']>0){
-			$sql1 = "INSERT INTO shopping_cart (customer_id,product_id,item_quantity) VALUES ( ".$user_id.", ".$product_id.", ".$_GET['quantity']." )";
-			if (mysqli_query($conn, $sql1)) {
-				//echo "New record created successfully";
+			$sql = "SELECT item_quantity FROM shopping_cart WHERE customer_id =".$user_id." AND product_id = ".$product_id;
+			// if the selected item is alread yin the shopping cart, we update the quantity of items 
+			$result=mysqli_query($conn, $sql);
+			if (mysqli_num_rows($result)>0){
+				$row = mysqli_fetch_array($result);
+				$update_quantity = $_GET['quantity']+$row['item_quantity'];
+				$sql1 = "UPDATE shopping_cart SET item_quantity = ".$update_quantity." WHERE customer_id =".$user_id." AND product_id = ".$product_id;
+				if (mysqli_query($conn, $sql1)) {
+				 echo "record updated successfully";
+				} else {
+				 echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+				}
+			
+            // if the selected item is not in the shopping cart, we insert a new record
 			} else {
-				//echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+				$sql2 = "INSERT INTO shopping_cart (customer_id,product_id,item_quantity) VALUES ( ".$user_id.", ".$product_id.", ".$_GET['quantity']." )";
+				if (mysqli_query($conn, $sql2)) {
+				echo "New record created successfully";
+				} else {
+				echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
+				}
 			}
+			
 		} 
 			
 		// select information about the product
@@ -126,22 +148,24 @@
 		$row = mysqli_fetch_assoc($result);
 		
 		echo '
-		<div class="row">
-			<div class="column leftpart">
+		<table>
+		<tr><td width="40%">
+			<div style="min-width:60%; margin-left:10%;">
+	
 				<div>
 					<h3>'.$row['name'].'</h3>
 				</div>
 				<div> 
-					Category:'.$row['sub_category'].'<br><br>
+					Category: '.$row['sub_category'].'<br><br>
 				</div>
 				<div> 
 					Detail：<br>'.$row['detail'].'<br><br>
 				</div> 
 				<div> 
-					Color:'.$row['color'].'
+					Color: '.$row['color'].'
 				</div>
 				<div> 
-					Theme:'.$row['theme'].'<br><br>
+					Theme: '.$row['theme'].'<br><br>
 				</div>
 		';
 
@@ -173,7 +197,11 @@
 					Quantity: <input type="number" min="0" step="1" placeholder="quantity"  name="quantity" id="quantity"> 
 				</div>
 				<div>
-					<br><input type="submit" class ="green_add" name="submit" onclick="notify()" value="Add to Bag"><input type="hidden" name="id" value=" '.$product_id.'"/>
+					<br><input type="submit" class ="green_add" name="submit" onclick="notify()" value="Add to Shopping Cart"><input type="hidden" name="id" value=" '.$product_id.'"/>
+					<br><br>
+				</div>
+				<div>
+					<br><input type="submit" class ="green_add" onclick="joinInWaitList()" name="wishlist" value="Add to wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/>
 				</div>
 				</form>';
 				
@@ -189,33 +217,39 @@
 				</div>
 				</form>';
 		}
+	
 
 		echo '
 			</div>
-			<div class="column rightpart">
-				<img src="'.$row['image1'].'" width="30%" height="30%">
-				<img src="'.$row['image2'].'" width="30%" height="30%">
-			</div>
+			</td>
+			<td width="60%">
+				<div style="min-width:60%; margin-left:10%;"> <img src="'.$row['image1'].'" width="40%" height="40%">
+				<img src="'.$row['image2'].'" width="40%" height="40%"> </div>
+			
+			</td></tr>
 		</div>
+		</table>
 		';			
 		?>
-		
-		<div class="center" style="text-align: center; margin-top:100px; margin-bottom:40px">
+	<div style="background:pink;">
+		<div class="center" style="text-align: center; margin-top:100px; padding-top:10px;padding-bottom:20px; margin-bottom:40px; background:pink;">
 			<h2>DISCOVER MORE</h2>
 		<button class="grey_add" onclick="location.href='index.php'" type="button">
 			<b>Shop Here</b>
 		</button> <br><br>
 		</div>
+	</div>
+	
 	</body>
 <script>
 
 //checking the input number of items and notify the user
 function notify(){
-	quantity = document.getElementById("quantity");
-	if (quantity<=0){
-		alert("Please input an positive number!");
+	quantity = document.getElementById("quantity").value;
+	if (quantity>=1){
+		alert("Item has been added to shopping bag!");
 	}else{
-	alert("Item has been added to shopping bag!");
+	alert("Please input an positive number!");
 	}
 }
 
