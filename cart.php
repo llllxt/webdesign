@@ -42,10 +42,11 @@
 <body>
 <div id="wrapper">
 <?php include 'header.php'; ?>
-<div> <h2 style="text-align:center" >SHOPPING CART </h2><br></div>
-<form method="post" action="updatecart.php">
+<div> <h2 style="text-align:center"> SHOPPING CART </h2><br></div>
+<form method="post" action="order.php">
  <table border="0" class="table1">
-      <tr >
+      <tr>
+        
         <th><h3>Product Description</h3></th>
         <th><h3>Item Price</h3></th>
         <th><h3>Quantity</h3></th>
@@ -129,7 +130,7 @@ function searchForItemsInCart($user_id,$conn){
       $price = $price+$row1['price']*$row['item_quantity'];
 
       echo '
-      <tr>
+      
       
       <th>
         <div class="left-column">
@@ -160,8 +161,9 @@ function searchForItemsInCart($user_id,$conn){
   <div style="text-align:right; margin-right: 150px; margin-bottom: 50px; min-width:100px">
       <b>Total Price: $'.$price.'</b>
   </div>
-
-      <input type="submit" class ="green_add" style="float:right; margin-right: 150px;  name="submit" value="Checkout"> <br> 
+   
+      <input type="submit" class ="green_add" style="float:right; margin-right: 150px;"  name="checkout" value="Checkout">
+      <input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/> <br> 
   
   ';
   
@@ -170,29 +172,10 @@ function searchForItemsInCart($user_id,$conn){
 
 //display all the items in the shopping cart for the user
 searchForItemsInCart($user_id,$conn);
-
 ?>
 </form>
 </div>
 
-
-<!-- <script > 
-function add(){
-    quantity = document.getElementById("quantity");
-
-    if (parseInt(quantity.value)>=0){
-    quantity.value = parseInt(quantity.value)+1;
-  }
-}
-
-function subtract(){
-  quantity = document.getElementById("quantity");
-  if (parseInt(quantity.value)>0){
-  quantity.value = parseInt(quantity.value)-1;
-  }
-}
-
-</script> -->
 </body>
 
 <?php include 'footer.php'; ?>
