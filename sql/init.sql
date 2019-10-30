@@ -70,6 +70,12 @@ CREATE TABLE banner(
   category varchar(255) not null
 );
 
+CREATE TABLE wishlist(
+  id int unsigned auto_increment primary key,
+  customer_id  int not null,
+  product_id int not null
+);
+
 
 INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("John","Smith","JohnSmith@gmail.com","John1234567","1996-05-10");
 INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("Tony","Robbins","Tony123@gmail.com","Tony1234567","1960-02-19");
