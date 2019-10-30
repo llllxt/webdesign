@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,9 +52,10 @@
         <th><h3>Edit</h3></th>
       </tr> 
 <?php
+
 $servername = "127.0.0.1";
 $username = "root";
-$password = "Fukua971005";
+$password = "xxxx";
 $db = "f34ee";
 
 // Create connection
@@ -65,9 +67,15 @@ if (!$conn) {
 }
 
 
-// $user_id = $_GET["id"];
-$user_id = "1";
-$_SESSION['user_id']=$user_id;
+// parse user email and get user_id
+$user_email = $_SESSION['valid_user'];
+//echo $_SESSION['valid_user'];
+$sql= 'SELECT id FROM customers WHERE email = "'.$user_email.'"';
+//echo $sql;
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$user_id = $row['id'];
+//echo $user_id;
 
 
 //delete function
@@ -137,8 +145,7 @@ function searchForItemsInCart($user_id,$conn){
       <td> $'.$row1['price'].' </td>
 
       <td class="right-column" id="quantityform">
-        <a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&decrease=1"><img src="img/minus.jpg"  width="15px" height="15px">  <input type="text" id="quantity" value="'.$row['item_quantity'].'">
-        <a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&increase=1"> <img src="img/plus.jpg" width="15px" height="15px">
+        <a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&decrease=1"><img src="img/minus.jpg"  width="15px" height="15px"><input type="text" id="quantity" value="'.$row['item_quantity'].'"><a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&increase=1"><img src="img/plus.jpg" width="15px" height="15px">
       </td>
 
       <td>

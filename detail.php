@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,21 +74,21 @@
 	<div class="wrapper">
 		<?php
     // session_start();
-		$conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
+		$conn = new mysqli("127.0.0.1", "root", "xxxx","f34ee");
 		if($conn->connection_error){
 		  include_once("error.php");
 		  exit();
 		}
 		include 'header.php';
+		
+		// parse user email and get user_id
+		$user_email = $_SESSION['valid_user'];
+		$sql= 'SELECT id FROM customers WHERE email = "'.$user_email.'"';
+		$result = mysqli_query($conn, $sql);
+		$row = mysqli_fetch_assoc($result);
+		$user_id = $row['id'];
+		//echo $user_id;
 
-        // parse value form session input
-		// $user_id = $_SESSION['user_id'];
-		// $product_id = $_SESSION['product_id'];
-
-		//for testing
-		// $user_id = $_SESSION['valid_user']
-		// echo $user_id;
-		$user_id = 3;
 		
 		// pass the product id from shop overview to this detail pages
 		if (isset($_GET['id'])) {
