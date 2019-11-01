@@ -119,13 +119,11 @@ function login(){
 			$product_id = $_GET['id'];
 		}
 
-       
 
-		
 
         //validate input quantity and insert to shopping cart table
-		if (isset($_GET['submit']) && isset($_GET['quantity']) && $_GET['quantity']>0){
-			if(isset($_SESSION['valid_user'])){
+		if (isset($_GET['submit']) ){
+			if(isset($_SESSION['valid_user'])&& $_GET['quantity']>0 && isset($_GET['quantity'])){
 				echo '<script> addToCart();</script>';
 			$sql = "SELECT item_quantity FROM shopping_cart WHERE customer_id =".$user_id." AND product_id = ".$product_id;
 			// if the selected item is alread yin the shopping cart, we update the quantity of items 
@@ -152,7 +150,7 @@ function login(){
 		}
 		else{
 			echo '<script> login();</script>';
-			echo "test1";
+			//echo "test1";
 		}
 		unset($_GET['quantity']);
 		unset($_GET['submit']);
@@ -176,9 +174,7 @@ function login(){
 			}
 		}else{
 				echo '<script> login();</script>';
-				echo "test2";
-				
-
+				//echo "test2";
 			}
 			unset($_GET['wishlist_item_id']);
 
@@ -243,8 +239,10 @@ function login(){
 					<br><input type="submit" class ="green_add" name="submit" value="Add to Shopping Cart"><input type="hidden" name="id" value=" '.$product_id.'"/>
 					<br><br>
 				</div>
+				</form>
+				<form  action="detail.php" method="get">
 				<div>
-					<br><input type="submit" class ="green_add" name="wishlist" value="Add to wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/>
+					<br><input type="submit" class ="green_add" name="wishlist" value="Add to wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/><input type="hidden" name="id" value=" '.$product_id.'"/>
 				</div>
 				</form>';
 				
