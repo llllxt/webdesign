@@ -78,12 +78,12 @@ if(isset($_POST['checkout'])){
             $updated_stock = $row1['stock']-$row['item_quantity'];
 			//update the quantity in product table
 			$sql6='UPDATE products SET stock ='.$updated_stock.' WHERE id='.$row['product_id'];
-			echo $sql6."<br>";
+			//echo $sql6."<br>";
 			if (mysqli_query($conn, $sql6)) {
-				echo "ok"."<br>";
+				//echo "ok"."<br>";
 				
 			} else {
-				echo "Error: " . $sql6 . "<br>" . mysqli_error($conn);
+				//echo "Error: " . $sql6 . "<br>" . mysqli_error($conn);
 			}
 
 		} 
