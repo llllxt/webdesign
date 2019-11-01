@@ -6,74 +6,6 @@ session_start();
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/style.css">
-<style>
-  .dropdown{  
-    background:#fafdfe;  
-    height:28px;  
-    width:auto;  
-    line-height:28px;  
-    border:1px solid #9bc0dd;  
-    -moz-border-radius:2px;  
-    -webkit-border-radius:2px;  
-    border-radius:2px;  
-}
-a{
-    color:black;
-    text-decoration-color: none;
-    text-decoration: none;
-  }
-.container {
-  display: flex;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-.row {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: inherit;
-  -ms-flex-pack: inherit;
-  justify-content: inherit;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  width: 100% !important;
-  padding: 0;
-  margin-left: auto;
-  margin-right: auto;
- 
-}
-.product-block{
-  width:33%;
-  height: 33%;
-  display: inline-block;
-}
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 90%;
-}
-.textcenter{
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-}
-.filter{
-  display: inline-block;
-  width: auto;
-  border: none;
-}
-
-</style>
 </head>
 <body>
 <div class="wrapper">
@@ -82,7 +14,7 @@ a{
    include 'connect.php';
     include 'header.php';
     $category = $_GET['category'];
-   
+ 
     if($category){
       $_SESSION['category'] = $category;
       $_SESSION['subcat'] = 0;
@@ -102,7 +34,6 @@ a{
       $_SESSION['subcat'] = 0;
     }
 
-    
     include 'slideshow.php';  
  ?>
 
@@ -233,6 +164,7 @@ echo '
       
     }
 
+
     //subcategory
     if($_SESSION['subcat']){
       $query = 'SELECT * FROM products WHERE sub_category="'.$_SESSION['subcat'].'" ';
@@ -262,6 +194,7 @@ echo '
     }
    
     }
+
 
     
     $result = $conn->query($query);

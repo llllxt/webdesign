@@ -75,13 +75,35 @@
 
 </style>
 </head>
+<script>
+
+//checking the input number of items and notify the user
+function addToCart(){
+	quantity = document.getElementById("quantity").value;
+	if (quantity>=1){
+		alert("Item has been added to shopping cart!");
+	}else{
+	alert("Please input an positive number!");
+	}
+}
+
+function addToWishlist(){
+	//can add function to send email to user!
+	alert("Item has been added to your wishlist!");
+}
+
+function login(){
+	alert("Please log in to add items to your shopping cart or wishlist.");
+}
+
+</script>
 <body>
 	<div class="wrapper">
 		<?php
     // session_start();
+
 		include 'connect.php';
 		include 'header.php';
-		
 		// parse user email and get user_id
 		$user_email = $_SESSION['valid_user'];
 		$sql= 'SELECT id FROM customers WHERE email = "'.$user_email.'"';
@@ -97,21 +119,14 @@
 			$product_id = $_GET['id'];
 		}
 
-        // add the item to wishlist table
-		if (isset($_GET['wishlist_item_id'])){
-			$product_id = $_GET['wishlist_item_id'];
-			$sql = "INSERT INTO wishlist (customer_id,product_id) VALUES ( ".$user_id.", ".$product_id." )";
-			//echo $sql;
-			if (mysqli_query($conn, $sql)) {
-				//echo "New record created successfully";
-			} else {
-				//echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-			}
+       
 
-		}
+		
 
         //validate input quantity and insert to shopping cart table
-		if (isset($_GET['quantity']) && $_GET['quantity']>0){
+		if (isset($_GET['submit']) && isset($_GET['quantity']) && $_GET['quantity']>0){
+			if(isset($_SESSION['valid_user'])){
+				echo '<script> addToCart();</script>';
 			$sql = "SELECT item_quantity FROM shopping_cart WHERE customer_id =".$user_id." AND product_id = ".$product_id;
 			// if the selected item is alread yin the shopping cart, we update the quantity of items 
 			$result=mysqli_query($conn, $sql);
@@ -124,9 +139,9 @@
 				} else {
 				 echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
 				}
-			
+			}
             // if the selected item is not in the shopping cart, we insert a new record
-			} else {
+			else {
 				$sql2 = "INSERT INTO shopping_cart (customer_id,product_id,item_quantity) VALUES ( ".$user_id.", ".$product_id.", ".$_GET['quantity']." )";
 				if (mysqli_query($conn, $sql2)) {
 				echo "New record created successfully";
@@ -134,9 +149,41 @@
 				echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
 				}
 			}
-			
+		}
+		else{
+			echo '<script> login();</script>';
+			echo "test1";
+		}
+		unset($_GET['quantity']);
+		unset($_GET['submit']);
 		} 
-			
+		
+		 // add the item to wishlist table
+		if (isset($_GET['wishlist_item_id'])){
+			if(isset($_SESSION['valid_user'])){
+				echo '<script> addToWishlist();</script>';
+			$sql0 = "SELECT * FROM wishlist WHERE customer_id = ".$user_id." AND product_id = ".$product_id;
+			$result0=mysqli_query($conn, $sql0);
+			if (mysqli_num_rows($result0)<1){
+				$product_id = $_GET['wishlist_item_id'];
+				$sql = "INSERT INTO wishlist (customer_id,product_id) VALUES ( ".$user_id.", ".$product_id." )";
+				//echo $sql;
+				if (mysqli_query($conn, $sql)) {
+					//echo "New record created successfully";
+				} else {
+					//echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+				}
+			}
+		}else{
+				echo '<script> login();</script>';
+				echo "test2";
+				
+
+			}
+			unset($_GET['wishlist_item_id']);
+
+		}
+
 		// select information about the product
 		$sql = "SELECT name, sub_category, price, detail, stock, color, theme, image1, image2, discount FROM products WHERE id=".$product_id;
 		//echo $sql;
@@ -193,11 +240,11 @@
 					Quantity: <input type="number" min="0" step="1" placeholder="quantity"  name="quantity" id="quantity"> 
 				</div>
 				<div>
-					<br><input type="submit" class ="green_add" name="submit" onclick="notify()" value="Add to Shopping Cart"><input type="hidden" name="id" value=" '.$product_id.'"/>
+					<br><input type="submit" class ="green_add" name="submit" value="Add to Shopping Cart"><input type="hidden" name="id" value=" '.$product_id.'"/>
 					<br><br>
 				</div>
 				<div>
-					<br><input type="submit" class ="green_add" onclick="joinInWaitList()" name="wishlist" value="Add to wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/>
+					<br><input type="submit" class ="green_add" name="wishlist" value="Add to wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/>
 				</div>
 				</form>';
 				
@@ -227,33 +274,10 @@
 		</table>
 		';			
 		?>
-	<div style="background:pink;">
-		<div class="center" style="text-align: center; margin-top:100px; padding-top:10px;padding-bottom:20px; margin-bottom:40px; background:pink;">
-			<h2>DISCOVER MORE</h2>
-		<button class="grey_add" onclick="location.href='index.php'" type="button">
-			<b>Shop Here</b>
-		</button> <br><br>
-		</div>
-	</div>
+	
 	
 	</body>
-<script>
 
-//checking the input number of items and notify the user
-function notify(){
-	quantity = document.getElementById("quantity").value;
-	if (quantity>=1){
-		alert("Item has been added to shopping bag!");
-	}else{
-	alert("Please input an positive number!");
-	}
-}
-
-function joinInWaitList(){
-	//can add function to send email to user!
-	alert("Item has been added to your wishlist!");
-}
-</script>
 <?php include 'footer.php';  ?> 
 
 </html>

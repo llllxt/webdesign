@@ -77,16 +77,18 @@ include 'slideshow.php';?>
 
 <div class="popular">
   <h2 align="center">Top Sellers</h2>
+  <div class="container">
   <?php 
   include 'connect.php';
   $seller=array();
   $query = 'SELECT * FROM products';
     $result = $conn->query($query);
     while($row = $result->fetch_assoc()){
+
         $query = 'SELECT SUM(order_item_quantity) AS sum FROM order_items WHERE product_id=' .$row['id'];
         $result1 = $conn -> query($query);
-        $row = $result1->fetch_assoc();
-        $seller[$product_id] = $row['sum'];
+        $row1 = $result1->fetch_assoc();
+        $seller[$row['id']] = $row1['sum'];
        }
 //   $query = 'SELECT * FROM products';
 //   $result = $conn->query($query);
@@ -104,31 +106,39 @@ include 'slideshow.php';?>
 // }
   
   
-  
   arsort($seller);
   $count = 0;
-  foreach($seller as $key=>$value){
+  foreach($seller as $key => $value){
     $count += 1;
     if($count == 4){
       break;
     }
     $query = 'SELECT * FROM products WHERE id='.$key;
-    echo $query;
     $result2 = $conn->query($query);
+    echo '
+       
+        <div class="row" style="width:100%">
+        
+       ';
     while($row = $result2->fetch_assoc()){
         $product_id = $row['id'];
         $product_name = $row['name'];
         $product_price = $row['price'];
         $product_image = $row['image1'];
         $product_discount = $row['discount'];
-        echo'<div class="product-block">';
+        echo'<div class="product-block" style="width:100%">';
         include 'product.php';
         echo '</div>';
        }
+        echo '
+       </div>
+       
+       ';
 
   }
   
   ?>
+  </div>
 </div>
 
 

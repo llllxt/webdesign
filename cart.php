@@ -43,18 +43,10 @@
 <div id="wrapper">
 <?php include 'header.php'; ?>
 <div> <h2 style="text-align:center"> SHOPPING CART </h2><br></div>
-<form method="post" action="order.php">
- <table border="0" class="table1">
-      <tr>
-        
-        <th><h3>Product Description</h3></th>
-        <th><h3>Item Price</h3></th>
-        <th><h3>Quantity</h3></th>
-        <th><h3>Edit</h3></th>
-      </tr> 
+
 <?php
 include 'connect.php';
-// parse user email and get user_id
+
 $user_email = $_SESSION['valid_user'];
 //echo $_SESSION['valid_user'];
 $sql= 'SELECT id FROM customers WHERE email = "'.$user_email.'"';
@@ -72,7 +64,7 @@ if (mysqli_query($conn, $sql1)) {
   
   unset($_GET['delete_flag']);
 } else {
-  echo "Error deleting record";
+  //echo "Error deleting record";
 }
 }
 
@@ -84,7 +76,7 @@ $sql1 = 'UPDATE shopping_cart SET item_quantity = '.$new_quantity_num.' WHERE cu
   if (mysqli_query($conn, $sql1)) {
   unset($_GET['increase']);
 } else {
-  echo "Error deleting record";
+  //echo "Error deleting record";
 }
 }
 // decrease the product quantity
@@ -95,7 +87,7 @@ if(isset($_GET['decrease']) && $_GET['decrease']==1 && $_GET['quantity_num']!=nu
   if (mysqli_query($conn, $sql1)) {
   unset($_GET['decrease']);
 } else {
-  echo "Error deleting record";
+  //echo "Error deleting record";
 }
 }
 }
@@ -107,17 +99,28 @@ function searchForItemsInCart($user_id,$conn){
   $result = mysqli_query($conn, $sql);
 
   if (mysqli_num_rows($result)> 0) {
+   echo '
+    <form method="post" action="order.php">
+ <table border="0" class="table1">
+      <tr>
+        
+        <th><h3>Product Description</h3></th>
+        <th><h3>Item Price</h3></th>
+        <th><h3>Quantity</h3></th>
+        <th><h3>Subtotal</h3></th>
+        <th><h3>Edit</h3></th>
+      </tr> 
+      ';
     while($row = mysqli_fetch_array($result)) {
 
-      $sql1 = "SELECT name,price,color,category,image1 FROM products WHERE id = ".$row['product_id'];
+      $sql1 = "SELECT name,price,color,category,image1,discount FROM products WHERE id = ".$row['product_id'];
       $result1 = mysqli_query($conn, $sql1);
       $row1 = mysqli_fetch_assoc($result1);
-
-      $price = $price+$row1['price']*$row['item_quantity'];
+      $sub_total = $row1['price']*$row['item_quantity']*$row1['discount'];
+      $price = $price+$row1['price']*$row['item_quantity']*$row1['discount'];
+      $item_price = $row1['price']*$row1['discount'];
 
       echo '
-      
-      
       <th>
         <div class="left-column">
           <img src='.$row1['image1'].' style="width: 120px;height: 120px" />
@@ -129,11 +132,13 @@ function searchForItemsInCart($user_id,$conn){
         </table> 
       </th>
       
-      <td> $'.$row1['price'].' </td>
+      <td> $'.$item_price.' </td>
 
       <td class="right-column" id="quantityform">
         <a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&decrease=1"><img src="img/minus.jpg"  width="15px" height="15px"><input type="text" id="quantity" value="'.$row['item_quantity'].'"><a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&increase=1"><img src="img/plus.jpg" width="15px" height="15px">
       </td>
+      
+      <td> $'.$sub_total.'</td>
 
       <td>
         <a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&delete_flag=1">Delete</a>
@@ -142,6 +147,7 @@ function searchForItemsInCart($user_id,$conn){
       </tr> 
        ';
     }
+
   echo '
   </table><br>
   <div style="text-align:right; margin-right: 150px; margin-bottom: 50px; min-width:100px">
@@ -153,6 +159,10 @@ function searchForItemsInCart($user_id,$conn){
   
   ';
   
+  } else{
+    echo '
+    <div style="text-align: center"><b> There is no item in your shopping cart. </b></div>
+    ';
   }
 }
 
@@ -161,9 +171,6 @@ searchForItemsInCart($user_id,$conn);
 ?>
 </form>
 </div>
-
 </body>
-
 <?php include 'footer.php'; ?>
-
 </html>

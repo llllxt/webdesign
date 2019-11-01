@@ -24,7 +24,7 @@ echo '<img class="center" id="img_'.$product_id.'" src='.$product_image.' alt="p
 		<?php 
 	if($product_discount<1){
 		
-		echo '<del style="float:right;color:red">';
+		echo '<del style="color:red; float:right">';
 		echo '                 $' .number_format($product_price,2);
 		echo '</del>';
 		
