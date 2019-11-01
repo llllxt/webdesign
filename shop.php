@@ -78,7 +78,7 @@ a{
 <body>
 <div class="wrapper">
   <?php
-    $conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
+    $conn = new mysqli("127.0.0.1", "root", "xxxx","f34ee");
     if($conn->connection_error){
       include_once("error.php");
       exit();
@@ -87,9 +87,9 @@ a{
     $category = $_GET['category'];
     if($_GET['category']){
 
-      echo 'get';
+      //echo 'get';
     }else{
-      echo 'didnt get';
+      //echo 'didnt get';
     }
     if($category){
       $_SESSION['category'] = $category;
@@ -110,9 +110,9 @@ a{
       $_SESSION['subcat'] = 0;
     }
 
-    echo $_SESSION['searchstring'];
-    echo $_SESSION['category'];
-    echo $_SESSION['subcat'];
+    // echo $_SESSION['searchstring'];
+    // echo $_SESSION['category'];
+    // echo $_SESSION['subcat'];
     
     include 'slideshow.php';  
  ?>
@@ -241,7 +241,7 @@ echo '
       
     }
 
-    echo $_SESSION['subcat'];
+    //echo $_SESSION['subcat'];
     //subcategory
     if($_SESSION['subcat']){
       $query = 'SELECT * FROM products WHERE sub_category="'.$_SESSION['subcat'].'" ';
@@ -271,7 +271,7 @@ echo '
     }
    
     }
-    echo $query;
+    //echo $query;
 
     
     $query = $query . ' LIMIT '.$offset.','.$pageSize;

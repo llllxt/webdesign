@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
+$conn = new mysqli("127.0.0.1", "root", "xxxx","f34ee");
     if($conn->connection_error){
       include_once("error.php");
       exit();
@@ -224,12 +224,13 @@ include 'header.php'; ?>
 
   	}else if($type=="history"){
     $history_order_num=0;
-    echo '<table border="0" style="margin-left:30px">';
+    
     
 
      $sql2= 'SELECT id, date_order_placed, total_price from t_order WHERE customer_id = '.$user_id;
      $result2 = mysqli_query($conn, $sql2);
      if (mysqli_num_rows($result2)>0) {
+      echo '<table border="0" style="margin-left:30px">';
      
      while($row2 = mysqli_fetch_array($result2)) {
       $history_order_num++;
@@ -272,8 +273,13 @@ include 'header.php'; ?>
         </tr>
            ';
       }
+      echo '</table>';
+    }else{
+      echo '
+      <div style="text-align:center; margin-top:20px;margin-left:20px;"><b>You do not have order history.</b></div>
+      ';
     }
-    echo '</table>';
+    
 
   }else if($type=="wishlist"){
 
@@ -294,6 +300,10 @@ include 'header.php'; ?>
         ';
     }
     echo '</div>';
+  }else{
+    echo '
+      <div style="text-align:center; margin-top:20px;margin-left:20px;"><b>There is no item in your wishlist.</b></div>
+      ';
   }
 
 
