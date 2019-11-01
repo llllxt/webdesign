@@ -67,6 +67,11 @@ a{
   margin-right: auto;
   width: 80%;
 }
+.filter{
+  display: inline-block;
+  width: auto;
+  border: none;
+}
 
 </style>
 </head>
@@ -80,10 +85,35 @@ a{
     }
     include 'header.php';
     $category = $_GET['category'];
+    if($_GET['category']){
+
+      echo 'get';
+    }else{
+      echo 'didnt get';
+    }
     if($category){
       $_SESSION['category'] = $category;
+      $_SESSION['subcat'] = 0;
+      $_SESSION['searchstring']  = 0;
     }
+     
     $subcat = $_GET['subcat'];
+    if($subcat){
+      $_SESSION['subcat'] = $subcat;
+      $_SESSION['category'] = 0;
+      $_SESSION['searchstring'] =0;
+    }
+    $searchstring = $_GET['searchstring'];
+    if($searchstring){
+      $_SESSION['searchstring'] = $searchstring;
+      $_SESSION['category'] = home;
+      $_SESSION['subcat'] = 0;
+    }
+
+    echo $_SESSION['searchstring'];
+    echo $_SESSION['category'];
+    echo $_SESSION['subcat'];
+    
     include 'slideshow.php';  
  ?>
 
@@ -122,8 +152,7 @@ echo '
     </select>
  </div>
  <div class="filter" > 
-  
-      <select name="theme" id="theme" class="dropdown" onchange="this.form.submit()">
+        <select name="theme" id="theme" class="dropdown" onchange="this.form.submit()">
         <option value="all" '.($theme=="all"?' selected' : '').'>THEME</option>
         <option value="Hobbies & Passions"'.($theme=="Hobbies & Passions"?' selected' : '').'>Hobbies &amp; Passions</option>
         <option value="Fairytale"'.($theme=="Fairytale"?' selected' : '').'>Fairytale</option>
@@ -131,8 +160,15 @@ echo '
         <option value="Flowers & Nature"'.($theme=="Flowers & Nature"?' selected' : '').'>Flower &amp; nature</option>
         <option value="Love & Romance"'.($theme=="Love & Romance"?' selected' : '').'>Love &amp; Romance</option>
       </select> 
+</div>
+
+  <div class="filter">
+     <select name="sort" id="sort" class="dropdown" onchange="this.form.submit()">
+        <option value="all" '.($sort=="all"?' selected ': '').'>Sort by</option>
+        <option value="price" '.($sort=="price"?' selected ': ''). '>Price</option>
+        <option value="discount" '.($sort=="discount"?' selected ': ''). '>Discount</option>
+     <select>
  </div>
- 
   </form>
 </div>
 <div>
@@ -148,12 +184,12 @@ echo '
     //search function implementation
     $query = 'SELECT COUNT(id) AS totalrows FROM products';
     if($subcat){
-      $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE sub_category="'.$subcat.'" ';
+      $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE sub_category="'.$_SESSION['subcat'].'" ';
     }else{
         if($_SESSION['category'] != "home"){
         $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE category="'.$_SESSION['category'].'" ';
         }else if(isset($_GET['searchstring'])){
-        $query = $query . ' WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
+        $query = $query . ' WHERE name LIKE "%' . $_SESSION['searchstring'] .'%"';
     }
     }
   
@@ -162,61 +198,82 @@ echo '
     $result->free();
 
     
-
-
-    //filter in product page
-    if($subcat){
-      $query = 'SELECT * FROM products WHERE sub_category="'.$subcat.'" ';
-    }else if($_SESSION['category'] != 'home'){
-      if($_SESSION['category'] == 'Sales'){
-        $query = 'SELECT * FROM products WHERE discount < 1';
-      }else{
-        $query = 'SELECT * FROM products WHERE category="'.$_SESSION['category'].'" ';
-      }
-      
-    if($_GET['color'] && $_GET['color'] != "all"){
-      $query=$query . ' AND color = "' .$_GET['color'] .'"';
-    }
-    if($_GET['theme'] && $_GET['theme'] != "all"){
-      $query = $query. ' AND theme = "' . $_GET['theme'] . '"';
-    }
-    if($_GET['price'] && $_GET['price'] != "all"){
-      $max = (int)$_GET['price']+50;
-      $query = $query . ' AND price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
-    }
-    }
-
-    else if(isset($_GET['searchstring'])){
-      $query ='SELECT * FROM products WHERE name LIKE "%' . $_GET['searchstring'] .'%"';
-    }
-    //filter in home page
-    else{
-      $query = 'SELECT * FROM products';
-      if($_GET['price'] && $_GET['price'] != "all"){
-      $max = (int)$_GET['price']+50;
-      $query = $query . ' WHERE price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
+    function subfilter($query){    
+      if($_GET['color'] && $_GET['color'] != "all"){
+        $query=$query . ' AND color = "' .$_GET['color'] .'"';
       }
       if($_GET['theme'] && $_GET['theme'] != "all"){
-        if(! ($_GET['price'] && $_GET['price'] != "all")){
-          $query = $query. ' WHERE theme = "' . $_GET['theme'] . '"';
-        }else{
-          $query = $query. ' AND theme = "' . $_GET['theme'] . '"';
-        }
+        $query = $query. ' AND theme = "' . $_GET['theme'] . '"';
       }
-    
+      if($_GET['price'] && $_GET['price'] != "all"){
+        $max = (int)$_GET['price']+50;
+        $query = $query . ' AND price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
+      }
+      if($_GET['sort'] && $_GET['sort'] == "price"){
+        $query .= ' ORDER BY price*discount ASC';
+      }else if($_GET['sort'] == "discount"){
+        $query .= ' ORDER BY discount ASC';
+      }
+      return $query;
     }
+
+    function mainfilter($query){
+      if($_GET['price'] && $_GET['price'] != "all"){
+        $max = (int)$_GET['price']+50;
+        $query = $query . ' WHERE price*discount BETWEEN ' . (int)$_GET['price'] . ' AND ' .$max;
+        }
+      if($_GET['theme'] && $_GET['theme'] != "all"){
+          if(! ($_GET['price'] && $_GET['price'] != "all")){
+            $query = $query. ' WHERE theme = "' . $_GET['theme'] . '"';
+          }else{
+            $query = $query. ' AND theme = "' . $_GET['theme'] . '"';
+          }
+        }
+      if($_GET['color'] && $_GET['color'] != "all"){
+        $query .= ' AND color = "' .$_GET['color'] . '"';
+      }
+      if($_GET['sort'] && $_GET['sort'] != "all"){
+        $query .= ' ORDER BY price ASC';
+      }else if($_GET['sort'] == "discount"){
+        $query .= ' ORDER BY discount ASC';
+      }
+        return $query;
+      
+    }
+
+    echo $_SESSION['subcat'];
+    //subcategory
+    if($_SESSION['subcat']){
+      $query = 'SELECT * FROM products WHERE sub_category="'.$_SESSION['subcat'].'" ';
+      $query = subfilter($query);
+    }
+    else{
+      //choose main category
+      if($_SESSION['category'] && $_SESSION['category'] != 'home'){
+          if($_SESSION['category'] == 'Sales'){
+            $query = 'SELECT * FROM products WHERE discount < 1';
+          }else{
+            $query = 'SELECT * FROM products WHERE category="'.$_SESSION['category'].'" ';
+          }  
+
+          $query = subfilter($query);       
+     }
+
+      //search from home page
+      else if($_SESSION['searchstring']){
+        $query ='SELECT * FROM products WHERE name LIKE "%' . $_SESSION['searchstring'] .'%"';
+        $query = subfilter($query);
+      }
+      //filter from homepage 
+      else if($_SESSION['category'] == 'home'){
+        $query = 'SELECT * FROM products';            
+        $query = mainfilter($query);
+    }
+   
+    }
+    echo $query;
+
     
-    // foreach ($_GET as $param_name => $param_val){
-    //   if($param_name == 'color' || $param_name == 'theme'){
-    //     $query = $query . ' AND '; 
-    //     $query = $query . $param_name . '="' . $param_val . '"';  
-    //     echo $query;
-    //   }else if($param_name == 'price'){
-    //     $max = (int)$param_val+50;
-        
-    //     $query = $query . $param_name . ' BETWEEN ' . (int)$param_val . ' AND ' .$max;
-    //   }
-    // }
     $query = $query . ' LIMIT '.$offset.','.$pageSize;
     $result = $conn->query($query);
     if($result){

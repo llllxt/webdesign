@@ -48,8 +48,9 @@ include 'header.php'; ?>
   <!-- Slideshow -->
 
 <?php 
-$category = "home";
-$_SESSION['category']="home";
+$_SESSION['category'] = "home";
+$_SESSION['subcat'] = 0;
+$_SESSION['searchstring'] = 0;
 include 'slideshow.php';?>
 
   <!-- New Arrivals-->
@@ -57,11 +58,11 @@ include 'slideshow.php';?>
   <div class="new-arrivals" style="margin-bottom: 50px">
     <table style="width: 80%;margin-left: auto;margin-right: auto;">
       <tr>
-        <td><a href="shop.php?category=charm">
+        <td><a href="shop.php?category=Charms">
           <img src ="img/new1.jpg" style="width: 350px; height: 450px"></td>
-        <td><a href="shop.php?category=necklace">
+        <td><a href="shop.php?category=Necklaces">
           <img src ="img/new2.jpg" style="width: 350px; height: 450px"></td>
-        <td><a href="shop.php?category=ring">
+        <td><a href="shop.php?category=Rings">
           <img src ="img/new3.jpg" style="width: 350px; height: 450px"></td>
       </tr>
 
@@ -88,7 +89,7 @@ if(isset($_GET['theme'])){
   $theme = $_GET['theme'];
 }
 echo '
-<form action="shop.php?price='.$price.' & theme='.$theme.'" method="GET">  
+<form action="shop.php?category=home & price='.$price.' & theme='.$theme.'" method="GET">  
  <div class="filter"> 
       <select name="price" id="price" class="dropdown">
       <option value="all" '.($price=="all"?' selected' : '').'>SELECT A PRICE RANGE</option>

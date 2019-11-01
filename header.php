@@ -1,7 +1,7 @@
 <header>
   <div class="topbar">
     <div class="right">
-    <form action="shop.php" method="get">
+    <form action="shop.php?category=home" method="get">
     <input name="searchstring" type="text" placeholder="Search">
     <a href="<?php 
     if($_SESSION['valid_user']){
