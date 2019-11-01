@@ -1,26 +1,14 @@
 <?php
 session_start();
-$conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
-    if($conn->connection_error){
-      include_once("error.php");
-      exit();
-    }
+include 'connect.php';
 $myusername = $_POST['username'];
 $mypassword = $_POST['password'];
 $mypassword = md5($mypassword);
-echo $myusername;
 $query = 'SELECT * FROM customers WHERE email="'.$myusername. '" AND password="' . $mypassword .'"';
 $result = $conn -> query($query);
-echo $result->num_rows; 
 if($result->num_rows > 0){
-	echo 'enter';
 	$row = $result->fetch_assoc();
-	echo $row;
-	foreach($row as $key => $value){
-		echo $key;
-		echo $value;
-	}
-	echo $row['first_name'];
+	
 	$_SESSION['valid_user'] = $myusername;
 	$_SESSION['firstname'] = $row['first_name'];
 	$_SESSION['lastname'] = $row['last_name'];

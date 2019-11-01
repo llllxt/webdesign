@@ -1,19 +1,14 @@
 <?php
 session_start();
-$conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
-    if($conn->connection_error){
-      include_once("error.php");
-      exit();
-    }
+include 'connect.php';
 $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
 $dateofbirth = $_POST['dateofbirth'];
 
-if($dateofbirth){
-$query = 'UPDATE customers SET first_name="'.$firstname.'" , last_name="'.$lastname.' , dateofbirth='.$dateofbirth. ' WHERE email="'.$_SESSION['valid_user'].'"';
-}else if($firstname || $lastname){
+if($firstname || $lastname){
 	$query = 'UPDATE customers SET first_name="'.$firstname.'" , last_name="'.$lastname.'" WHERE email="'.$_SESSION['valid_user'].'"';
 }
+
 if($query){
 echo '<script> alert("Edit Successfully") </script>';
 $result = $conn -> query($query);
@@ -204,10 +199,7 @@ include 'header.php'; ?>
 			<label>Last Name: </label>
 			<input type="text" id="lastname" name="lastname" value="'.$_SESSION["lastname"]. '" Required>
 		</div>
-		<div class="input-group">
-			<label>Date of Birth</label>
-			<input type="date" id="dateofbirth" name="dateofbirth">
-		</div>
+		
     <br><br>
 		<div >
 			<input type="submit" class="submitbutton" name="reg_user" value="Edit" style="background-color: #f5f5f5;padding: 5px">

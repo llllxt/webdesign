@@ -54,7 +54,7 @@ $_SESSION['searchstring'] = 0;
 include 'slideshow.php';?>
 
   <!-- New Arrivals-->
-  <h2 style="text-align: center;">New Arrivals</h2>
+  <h2 style="text-align: center;">Discover More</h2>
   <div class="new-arrivals" style="margin-bottom: 50px">
     <table style="width: 80%;margin-left: auto;margin-right: auto;">
       <tr>
@@ -75,9 +75,68 @@ include 'slideshow.php';?>
 
   </div>
 
+<div class="popular">
+  <h2 align="center">Top Sellers</h2>
+  <?php 
+  include 'connect.php';
+  $seller=array();
+  $query = 'SELECT * FROM products';
+    $result = $conn->query($query);
+    while($row = $result->fetch_assoc()){
+        $query = 'SELECT SUM(order_item_quantity) AS sum FROM order_items WHERE product_id=' .$row['id'];
+        $result1 = $conn -> query($query);
+        $row = $result1->fetch_assoc();
+        $seller[$product_id] = $row['sum'];
+       }
+//   $query = 'SELECT * FROM products';
+//   $result = $conn->query($query);
+//   // $row = $result->fetch_assoc();
+//   // echo $row['id'];
+// echo $query;
+// $num_rows = mysqli_num_rows($result);
+// if($num_rows > 0){
+//   while($row = $result->fetch_assoc()){
+//       $query = 'SELECT SUM(order_item_quantity) FROM order_items WHERE product_id=' .$row['id'];
+//       $result = $conn -> query($query);
+//       $seller[$product_id] = $result;
+
+//     }
+// }
+  
+  
+  
+  arsort($seller);
+  $count = 0;
+  foreach($seller as $key=>$value){
+    $count += 1;
+    if($count == 4){
+      break;
+    }
+    $query = 'SELECT * FROM products WHERE id='.$key;
+    echo $query;
+    $result2 = $conn->query($query);
+    while($row = $result2->fetch_assoc()){
+        $product_id = $row['id'];
+        $product_name = $row['name'];
+        $product_price = $row['price'];
+        $product_image = $row['image1'];
+        $product_discount = $row['discount'];
+        echo'<div class="product-block">';
+        include 'product.php';
+        echo '</div>';
+       }
+
+  }
+  
+  ?>
+</div>
+
+
+
+
   <!-- Need Help-->
-  <h2 align="center">Need help finding that perfect gift?</h2>
-  <div class="needhelp" align="center" style="width:50%; margin-left: auto;margin-right: auto;">
+  <h2 align="center">Need help finding the perfect gift?</h2>
+  <div class="needhelp" align="center" style="width:50%; margin-left: auto;margin-right: auto; min-width:300px;">
     
      
     

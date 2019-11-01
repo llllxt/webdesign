@@ -77,20 +77,12 @@ a{
 </head>
 <body>
 <div class="wrapper">
+<a name="top"></a>
   <?php
-    $conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
-    if($conn->connection_error){
-      include_once("error.php");
-      exit();
-    }
+   include 'connect.php';
     include 'header.php';
     $category = $_GET['category'];
-    if($_GET['category']){
-
-      echo 'get';
-    }else{
-      echo 'didnt get';
-    }
+   
     if($category){
       $_SESSION['category'] = $category;
       $_SESSION['subcat'] = 0;
@@ -110,9 +102,6 @@ a{
       $_SESSION['subcat'] = 0;
     }
 
-    echo $_SESSION['searchstring'];
-    echo $_SESSION['category'];
-    echo $_SESSION['subcat'];
     
     include 'slideshow.php';  
  ?>
@@ -129,6 +118,9 @@ if(isset($_GET['price'])){
 }
 if(isset($_GET['theme'])){
   $theme = $_GET['theme'];
+}
+if(isset($_GET['sort'])){
+  $sort = $_GET['sort'];
 }
 echo '
 <div class="filter">   
@@ -164,10 +156,10 @@ echo '
 
   <div class="filter">
      <select name="sort" id="sort" class="dropdown" onchange="this.form.submit()">
-        <option value="all" '.($sort=="all"?' selected ': '').'>Sort by</option>
-        <option value="price" '.($sort=="price"?' selected ': ''). '>Price</option>
-        <option value="discount" '.($sort=="discount"?' selected ': ''). '>Discount</option>
-     <select>
+        <option value="all" '.($sort=="all"?' selected' : '').'>Sort by</option>
+        <option value="price" '.($sort=="price"?' selected' : '').'>PRICE</option>
+        <option value="discount" '.($sort=="discount"?' selected' : '').'>DISCOUNT</option>
+     </select>
  </div>
   </form>
 </div>
@@ -176,26 +168,26 @@ echo '
 <br>
 </div>
 ';
-    $pageSize = 6;
-    $page = isset($_GET['page'])?$_GET['page']:1;
-    //calculate offset through page and pagesize
-    $offset = $pageSize*($page-1);
+    // $pageSize = 6;
+    // $page = isset($_GET['page'])?$_GET['page']:1;
+    // //calculate offset through page and pagesize
+    // $offset = $pageSize*($page-1);
     
-    //search function implementation
-    $query = 'SELECT COUNT(id) AS totalrows FROM products';
-    if($subcat){
-      $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE sub_category="'.$_SESSION['subcat'].'" ';
-    }else{
-        if($_SESSION['category'] != "home"){
-        $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE category="'.$_SESSION['category'].'" ';
-        }else if(isset($_GET['searchstring'])){
-        $query = $query . ' WHERE name LIKE "%' . $_SESSION['searchstring'] .'%"';
-    }
-    }
+    // //search function implementation
+    // $query = 'SELECT COUNT(id) AS totalrows FROM products';
+    // if($subcat){
+    //   $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE sub_category="'.$_SESSION['subcat'].'" ';
+    // }else{
+    //     if($_SESSION['category'] != "home"){
+    //     $query = 'SELECT COUNT(id) AS totalrows FROM products WHERE category="'.$_SESSION['category'].'" ';
+    //     }else if(isset($_GET['searchstring'])){
+    //     $query = $query . ' WHERE name LIKE "%' . $_SESSION['searchstring'] .'%"';
+    // }
+    // }
   
-    $result = $conn->query($query);
-    $row = $result->fetch_assoc();
-    $result->free();
+    // $result = $conn->query($query);
+    // $row = $result->fetch_assoc();
+    // $result->free();
 
     
     function subfilter($query){    
@@ -241,7 +233,6 @@ echo '
       
     }
 
-    echo $_SESSION['subcat'];
     //subcategory
     if($_SESSION['subcat']){
       $query = 'SELECT * FROM products WHERE sub_category="'.$_SESSION['subcat'].'" ';
@@ -271,10 +262,8 @@ echo '
     }
    
     }
-    echo $query;
 
     
-    $query = $query . ' LIMIT '.$offset.','.$pageSize;
     $result = $conn->query($query);
     if($result){
       $num_rows = mysqli_num_rows($result);
@@ -299,25 +288,7 @@ echo '
        </div>
        </div>
        ';
-       echo '
-       <div class="row>
-       <div class="pagination shop_pagination">';
-       $num_pages = floor($totalrows/6)+1;
-       //the first page has no previous page
-       if($num_pages > 1){
-        if($page>0){
-          echo'
-          <a href="shop.php?page='.($page-1).'">prev</a>';
-          echo '&nbsp;';
-        }
-        // the last page has no next page
-        if($page<$num_pages){
-          echo '<a href="shop.php?page='.($page+1).'">next</a>';
-          echo '&nbsp;';
-        }     
-    }
-    echo '</div>
-    </div>';
+       
         }
       }
     
@@ -325,6 +296,7 @@ echo '
  ?>
         
 
+<a href="#top"><img class="center"; style="width: 100px;height: 70px; " src="img/backtotop.png"></a>
 <script type="text/javascript" src='javascript/slide.js'></script>
 <script type="text/javascript" src='javascript/filter.js'></script>
 </div>

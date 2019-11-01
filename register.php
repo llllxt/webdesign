@@ -1,10 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("127.0.0.1", "root", "Fukua971005","f34ee");
-    if($conn->connection_error){
-      include_once("error.php");
-      exit();
-    }
+include 'connect.php';
 $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
 $dateofbirth = $_POST['dateofbirth'];
@@ -23,7 +19,6 @@ if($row){
 	echo 'Email already exists';
 }else{
 	$query = 'INSERT INTO customers (first_name,last_name,email,password,dateofbirth) VALUES ("'.$firstname .'","' . $lastname . '","' .$email. '","' .$password. '","' .$dateofbirth. '")';
-	echo $query;
 	$result = $conn -> query($query);
   if(!$result){
   }else{

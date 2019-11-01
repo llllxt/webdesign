@@ -17,11 +17,11 @@
   </div>
   <!-- Header -->
   <div class="header">
-       <img src="img/header2.jpg" id="img_head" alt="head" style="width: 200px;height: 70px;" class="center">
+       <a href="index.php"><img src="img/header2.jpg" id="img_head" alt="head" style="width: 200px;height: 70px;" class="center"></a>
   </div>
 
   <!-- Top Navigation Bar-->
-  <div class="nav">
+  <div class="nav" style="min-width: 1000px;">
         <ul>
           <li class="home"><a href="index.php">Home</a></li>
           <li class="Charms"><a href="shop.php?category=Charms">Charms</a>
