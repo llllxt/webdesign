@@ -134,13 +134,23 @@ label{
   .wishlist:after{
     content: "";
   clear: both;
-  display: table;
+  display: inline-block;
+
   }
   .wishlist_img{
     float: left;
      width:50%;
     height:50%;
+    display: inline-block;
+    text-align: center;
   }
+  .container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+
 }
 
 </style>
@@ -275,6 +285,16 @@ include 'header.php'; ?>
     
 
   }else if($type=="wishlist"){
+        //delete function
+    if (isset($_GET['delete_flag']) && $_GET['delete_flag']==1){
+      $sql1 = 'DELETE FROM  wishlist WHERE customer_id = '.$user_id. ' AND product_id = '.$_GET['delete_product_id']; 
+    if (mysqli_query($conn, $sql1)) {
+      //echo "ok";
+      unset($_GET['delete_flag']);
+    } else {
+      //echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+    }
+    }
 
     $sql2= 'SELECT product_id FROM wishlist WHERE customer_id = '.$user_id;
     $result2 = mysqli_query($conn, $sql2);
@@ -286,10 +306,10 @@ include 'header.php'; ?>
         $row3 = mysqli_fetch_assoc($result3);
 
         echo '
-        <div class="wishlist_img">
-        <a href="detail.php?id='.$row2['product_id'].'"><img src= '.$row3['image1'].'></a>
-        </div>
-
+          <div class="wishlist_img">
+            <a href="detail.php?id='.$row2['product_id'].'"><img src= '.$row3['image1'].'></a>
+            <a href="welcome.php?type=wishlist&delete_product_id='.$row2['product_id'].'&delete_flag=1">Delete</a>
+            </div>          
         ';
     }
     echo '</div>';
