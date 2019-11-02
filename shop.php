@@ -222,6 +222,13 @@ echo '
        </div>
        ';
        
+        }else{
+          echo 
+          '
+          <div style="text-align:center">
+          <h2> No Search Result</p>
+          </div>
+          ';
         }
       }
     
