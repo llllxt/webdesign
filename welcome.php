@@ -227,13 +227,16 @@ include 'header.php'; ?>
 
   	}else if($type=="history"){
     $history_order_num=0;
-    
-    
-
      $sql2= 'SELECT id, date_order_placed, total_price from t_order WHERE customer_id = '.$user_id;
      $result2 = mysqli_query($conn, $sql2);
+
+     echo' 
+     <div style="margin-left:10px; margin-right:10px;">
+    <div style="text-align:center;margin-top:20px;margin-bottom:20px;"> <h3> ORDER HISTORY</h3></div>
+    ';
+
      if (mysqli_num_rows($result2)>0) {
-      echo '<table border="0" style="margin-left:30px">';
+      echo ' <table border="0" style="margin-left:30px">';
      
      while($row2 = mysqli_fetch_array($result2)) {
       $history_order_num++;
@@ -272,7 +275,7 @@ include 'header.php'; ?>
         <div style="float:right; margin-right:10px;margin-bottom:20px"><b>Total Price: $'.$row2['total_price'].'</b></div>
         </tr>
         <tr>
-        <div style="margin-bottom:20px;"> <hr> </div>
+        <div> <hr></div>
         </tr>
            ';
       }
@@ -282,7 +285,7 @@ include 'header.php'; ?>
       <div style="text-align:center; margin-top:20px;margin-left:20px;"><b>You do not have order history.</b></div>
       ';
     }
-    
+    echo '</div>';
 
   }else if($type=="wishlist"){
         //delete function
@@ -298,6 +301,9 @@ include 'header.php'; ?>
 
     $sql2= 'SELECT product_id FROM wishlist WHERE customer_id = '.$user_id;
     $result2 = mysqli_query($conn, $sql2);
+    echo' 
+    <div style="text-align:center;margin-top:20px;margin-bottom:10px;"> <h3> WISH LIST</h3></div>
+    ';
     if (mysqli_num_rows($result2)>0) {
       echo '<div class="wishlist">';
       while($row2 = mysqli_fetch_array($result2)) {

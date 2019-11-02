@@ -204,7 +204,7 @@ function inputQuantity(){
 					Detail：<br>'.$row['detail'].'<br><br>
 				</div> 
 				<div> 
-					Color: '.$row['color'].'
+					Color: '.$row['color'].'<br><br>
 				</div>
 				<div> 
 					Theme: '.$row['theme'].'<br><br>
@@ -232,7 +232,7 @@ function inputQuantity(){
 		
         //check if the product is in stock, if it is in stock, we show the add to bag button
 		//if not, we disable add to bag button and show notify me buttom.
-		if ($row['stock']>=1) {
+		if ($row['stock']<1) {
 			echo '
 				<form  action="detail.php" method="get">
 				<div> 
@@ -245,7 +245,7 @@ function inputQuantity(){
 				</form>
 				<form  action="detail.php" method="get">
 				<div>
-					<br><input type="submit" class ="green_add" name="wishlist" value="Add to wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/><input type="hidden" name="id" value=" '.$product_id.'"/>
+					<br><input type="submit" class ="green_add" name="wishlist" value="Add to Wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/><input type="hidden" name="id" value=" '.$product_id.'"/>
 				</div>
 				</form>';
 				
