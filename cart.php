@@ -19,7 +19,7 @@
 
 .table{
   text-align: left;
-  min-width: 200px;
+  min-width: 100px;
 }
 
 .table1{
@@ -47,6 +47,11 @@
 <?php
 include 'connect.php';
 
+if (!isset($_SESSION['valid_user'])){
+  echo '<div style="text-align: center"><b> Please log in to add items to your shopping cart!</b></div>';
+
+} else {
+ 
 $user_email = $_SESSION['valid_user'];
 //echo $_SESSION['valid_user'];
 $sql= 'SELECT id FROM customers WHERE email = "'.$user_email.'"';
@@ -93,7 +98,7 @@ if(isset($_GET['decrease']) && $_GET['decrease']==1 && $_GET['quantity_num']!=nu
 }
 
 
-function searchForItemsInCart($user_id,$conn){ 
+function searchForItemsInCart($user_id,$conn){
   $price=0;
   $sql = "SELECT product_id, item_quantity FROM shopping_cart WHERE customer_id = ". $user_id;
   $result = mysqli_query($conn, $sql);
@@ -168,6 +173,8 @@ function searchForItemsInCart($user_id,$conn){
 
 //display all the items in the shopping cart for the user
 searchForItemsInCart($user_id,$conn);
+
+}
 ?>
 </form>
 </div>

@@ -79,12 +79,7 @@
 
 //checking the input number of items and notify the user
 function addToCart(){
-	quantity = document.getElementById("quantity").value;
-	if (quantity>=1){
-		alert("Item has been added to shopping cart!");
-	}else{
-	alert("Please input an positive number!");
-	}
+	alert("Item has been added to shopping cart!");
 }
 
 function addToWishlist(){
@@ -94,6 +89,10 @@ function addToWishlist(){
 
 function login(){
 	alert("Please log in to add items to your shopping cart or wishlist.");
+}
+
+function inputQuantity(){
+	alert("Please input a positive quantity number!");
 }
 
 </script>
@@ -123,7 +122,8 @@ function login(){
 
         //validate input quantity and insert to shopping cart table
 		if (isset($_GET['submit']) ){
-			if(isset($_SESSION['valid_user'])&& $_GET['quantity']>0 && isset($_GET['quantity'])){
+			if(isset($_SESSION['valid_user'])){
+				if($_GET['quantity']>0 && isset($_GET['quantity'])){
 				echo '<script> addToCart();</script>';
 			$sql = "SELECT item_quantity FROM shopping_cart WHERE customer_id =".$user_id." AND product_id = ".$product_id;
 			// if the selected item is alread yin the shopping cart, we update the quantity of items 
@@ -133,21 +133,24 @@ function login(){
 				$update_quantity = $_GET['quantity']+$row['item_quantity'];
 				$sql1 = "UPDATE shopping_cart SET item_quantity = ".$update_quantity." WHERE customer_id =".$user_id." AND product_id = ".$product_id;
 				if (mysqli_query($conn, $sql1)) {
-				 echo "record updated successfully";
+				 //echo "record updated successfully";
 				} else {
-				 echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+				 //echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
 				}
 			}
             // if the selected item is not in the shopping cart, we insert a new record
 			else {
 				$sql2 = "INSERT INTO shopping_cart (customer_id,product_id,item_quantity) VALUES ( ".$user_id.", ".$product_id.", ".$_GET['quantity']." )";
 				if (mysqli_query($conn, $sql2)) {
-				echo "New record created successfully";
+				//echo "New record created successfully";
 				} else {
-				echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
+				//echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
 				}
 			}
+		}else{
+			echo '<script> inputQuantity();</script>';
 		}
+	}
 		else{
 			echo '<script> login();</script>';
 			//echo "test1";
@@ -254,11 +257,10 @@ function login(){
 					The item you have chosen is out of stock. You can add it to your wishlist!
 				</div>
 				<div>
-					<br><input type="submit" class ="green_add" onclick="joinInWaitList()" name="wishlist" value="Add to wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/>
+					<br><input type="submit" class ="green_add" name="wishlist" value="Add to wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/>
 				</div>
 				</form>';
 		}
-	
 
 		echo '
 			</div>
