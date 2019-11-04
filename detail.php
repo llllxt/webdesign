@@ -84,11 +84,14 @@ function addToCart(){
 
 function addToWishlist(){
 	//can add function to send email to user!
-	alert("Item has been added to your wishlist!");
+	alert("Item has been added to your wish list!");
+}
+function alreadyInWishlist(){
+	alert("Item is already in your wish list!");
 }
 
 function login(){
-	alert("Please log in to add items to your shopping cart or wishlist.");
+	alert("Please log in to add items to your shopping cart or wish list.");
 }
 
 function inputQuantity(){
@@ -162,18 +165,21 @@ function inputQuantity(){
 		 // add the item to wishlist table
 		if (isset($_GET['wishlist_item_id'])){
 			if(isset($_SESSION['valid_user'])){
-				echo '<script> addToWishlist();</script>';
+			$product_id = $_GET['wishlist_item_id'];
 			$sql0 = "SELECT * FROM wishlist WHERE customer_id = ".$user_id." AND product_id = ".$product_id;
 			$result0=mysqli_query($conn, $sql0);
 			if (mysqli_num_rows($result0)<1){
-				$product_id = $_GET['wishlist_item_id'];
+				
 				$sql = "INSERT INTO wishlist (customer_id,product_id) VALUES ( ".$user_id.", ".$product_id." )";
 				//echo $sql;
 				if (mysqli_query($conn, $sql)) {
 					//echo "New record created successfully";
+					echo '<script> addToWishlist();</script>';
 				} else {
 					//echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 				}
+			}else{
+				echo '<script> alreadyInWishlist();</script>';
 			}
 		}else{
 				echo '<script> login();</script>';
@@ -232,7 +238,7 @@ function inputQuantity(){
 		
         //check if the product is in stock, if it is in stock, we show the add to bag button
 		//if not, we disable add to bag button and show notify me buttom.
-		if ($row['stock']<1) {
+		if ($row['stock']>=1) {
 			echo '
 				<form  action="detail.php" method="get">
 				<div> 
@@ -245,7 +251,7 @@ function inputQuantity(){
 				</form>
 				<form  action="detail.php" method="get">
 				<div>
-					<br><input type="submit" class ="green_add" name="wishlist" value="Add to Wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/><input type="hidden" name="id" value=" '.$product_id.'"/>
+					<br><input type="submit" class ="green_add" name="wishlist" value="Add to Wish List"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/><input type="hidden" name="id" value=" '.$product_id.'"/>
 				</div>
 				</form>';
 				
@@ -257,7 +263,7 @@ function inputQuantity(){
 					The item you have chosen is out of stock. You can add it to your wishlist!
 				</div>
 				<div>
-					<br><input type="submit" class ="green_add" name="wishlist" value="Add to wishlist"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/>
+					<br><input type="submit" class ="green_add" name="wishlist" value="Add to Wish List"><input type="hidden" name="wishlist_item_id" value=" '.$product_id.'"/>
 				</div>
 				</form>';
 		}

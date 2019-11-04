@@ -242,8 +242,8 @@ include 'header.php'; ?>
       $history_order_num++;
        echo 
        '<tr>
-       <div> <b>ORDER'.$history_order_num.'</b></div
-            <div style="float:right; margin-right:10px;margin-bottom:20px"> Order Time:'.$row2['date_order_placed'].'<br></div>
+       <div><b>ORDER'.$history_order_num.'</b></div>
+       <div style="float:left; margin-right:10px;margin-bottom:20px"> Order Time:'.$row2['date_order_placed'].'<br></div>
         </tr>
         ';
         $sql3 = 'SELECT product_id, order_item_quantity, order_item_price FROM order_items WHERE order_id ='.$row2['id'];
@@ -255,14 +255,11 @@ include 'header.php'; ?>
             $row4 = mysqli_fetch_assoc($result4);
             echo '
             <tr>
-              
                 <div style="width:20%;height:20%"><a href="detail.php?id='.$row3['product_id'].'"><img src= '.$row4['image1'].'></a></div>
                 <div> <b>'.$row4['name'].'</b></div>
-         
               <div> Quantity: '.$row3['order_item_quantity'].' </div>
               <div> Price: $'.$row4['price']*$row4['discount'].' </div>
-              <div> Sub Total: $'.$row3['order_item_price'].' </div>
-             
+              <div> Subtotal: $'.$row3['order_item_price'].' </div>
             </tr>
 
             '
@@ -271,12 +268,10 @@ include 'header.php'; ?>
 
         }
          echo '
-         <tr>
-        <div style="float:right; margin-right:10px;margin-bottom:20px"><b>Total Price: $'.$row2['total_price'].'</b></div>
-        </tr>
         <tr>
-        <div> <hr></div>
+        <div style="float:right; margin-right:10px;margin-bottom:20px"><b>Total Price: $'.$row2['total_price'].'</b></div><br><br><br>
         </tr>
+        
            ';
       }
       echo '</table>';
@@ -293,6 +288,9 @@ include 'header.php'; ?>
       $sql1 = 'DELETE FROM  wishlist WHERE customer_id = '.$user_id. ' AND product_id = '.$_GET['delete_product_id']; 
     if (mysqli_query($conn, $sql1)) {
       //echo "ok";
+      echo '
+      <script> alert("Product has been removed from your wish list!")</script>
+      ';
       unset($_GET['delete_flag']);
     } else {
       //echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
@@ -315,16 +313,17 @@ include 'header.php'; ?>
           <div class="wishlist_img">
             <a href="detail.php?id='.$row2['product_id'].'"><img src= '.$row3['image1'].'></a>
             <a href="welcome.php?type=wishlist&delete_product_id='.$row2['product_id'].'&delete_flag=1">Delete</a>
+            <br><br>
             </div>          
         ';
     }
     echo '</div>';
   }else{
     echo '
-      <div style="text-align:center; margin-top:20px;margin-left:20px;"><b>There is no item in your wishlist.</b></div>
+      <div style="text-align:center; margin-top:20px;margin-left:20px;"><b>There is no item in your wish list.</b></div>
       ';
   }
-
+  
 
   }
   	?>
