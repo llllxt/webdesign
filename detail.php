@@ -98,6 +98,11 @@ function inputQuantity(){
 	alert("Please input a positive quantity number!");
 }
 
+function inputLesserQuantity(){
+	var val = "<?php echo $avalible_quantity ?>";
+	alert("Please input a lesser value for the quantity! There are "+val +" items in stock");
+}
+
 </script>
 <body>
 	<div class="wrapper">
@@ -126,7 +131,13 @@ function inputQuantity(){
         //validate input quantity and insert to shopping cart table
 		if (isset($_GET['submit']) ){
 			if(isset($_SESSION['valid_user'])){
-				if($_GET['quantity']>0 && isset($_GET['quantity'])){
+			$sql0 = "SELECT stock FROM products WHERE id=".$product_id;
+			//echo $sql;
+			$result0 = mysqli_query($conn, $sql0);
+			$row0 = mysqli_fetch_assoc($result0);
+            $avalible_quantity = $row0['stock'];
+
+				if($_GET['quantity']>0 &&  $_GET['quantity']<= $avalible_quantity && isset($_GET['quantity'])){
 				echo '<script> addToCart();</script>';
 			$sql = "SELECT item_quantity FROM shopping_cart WHERE customer_id =".$user_id." AND product_id = ".$product_id;
 			// if the selected item is alread yin the shopping cart, we update the quantity of items 
@@ -150,13 +161,16 @@ function inputQuantity(){
 				//echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);
 				}
 			}
-		}else{
+		}else if ($_GET['quantity']>$avalible_quantity && isset($_GET['quantity'])){
+             echo '<script> alert("Please input a lesser value for the quantity! There are '.$avalible_quantity.' items in stock")</script>';
+		}
+		else{
 			echo '<script> inputQuantity();</script>';
 		}
 	}
 		else{
 			echo '<script> login();</script>';
-			//echo "test1";
+			
 		}
 		unset($_GET['quantity']);
 		unset($_GET['submit']);
