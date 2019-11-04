@@ -43,7 +43,7 @@
 <?php include 'header.php'; ?>
 <div style="text-align: center; margin-top:40px;"">
 <h2> Thanks for your shopping at Phoebe. <br> </h2>
-<h3>A comfirmation email has been sent to your email! </h3>
+<h3>A confirmation email has been sent to your email! </h3>
 </div>
 
 <?php
