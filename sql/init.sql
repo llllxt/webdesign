@@ -39,12 +39,6 @@ CREATE TABLE  order_items  (
    order_item_price  float not null
 );
 
-CREATE TABLE discount(
-  id  int unsigned auto_increment primary key,
-  product_id int not null,
-  discount float not null
-
-);
 
 CREATE TABLE shopping_cart(
   id  int unsigned not null auto_increment primary key,
@@ -53,14 +47,6 @@ CREATE TABLE shopping_cart(
   item_quantity  int not null
 );
 
-CREATE TABLE bank_simulation (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  type BIT(1) NOT NULL,
-  number VARCHAR(19) NOT NULL,
-  expiry DATE NOT NULL,
-  CVV VARCHAR(4) NOT NULL,
-  name VARCHAR(50) NOT NULL
-);
 
 CREATE TABLE banner(
   id int unsigned auto_increment primary key,
