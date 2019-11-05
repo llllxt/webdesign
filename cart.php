@@ -75,13 +75,29 @@ if (mysqli_query($conn, $sql1)) {
 
 // increase the product quantity
 if(isset($_GET['increase']) && $_GET['increase']==1 && $_GET['quantity_num']!=null){
-  $new_quantity_num= $_GET['quantity_num']+1;
- 
-$sql1 = 'UPDATE shopping_cart SET item_quantity = '.$new_quantity_num.' WHERE customer_id = '.$user_id. ' AND product_id = '.$_GET['product_id'];
+  $sql = "SELECT stock FROM products WHERE id = ".$_GET['product_id'];
+  $result = mysqli_query($conn, $sql);
+  $row = mysqli_fetch_assoc($result);
+
+  // when the selected quantity is equal to the quantity in stock => can not increase anymore
+  if ($row['stock'] <= $_GET['quantity_num']){
+
+   echo '<script> alert("Already reach the maximun quantity '.$row['stock'].' for the product in stock. You can not increase the quantity anymore.")</script>';
+   $sql1 = 'UPDATE shopping_cart SET item_quantity = '.$row['stock'].' WHERE customer_id = '.$user_id. ' AND product_id = '.$_GET['product_id'];
   if (mysqli_query($conn, $sql1)) {
   unset($_GET['increase']);
 } else {
   //echo "Error deleting record";
+}
+  
+  } else{
+  $new_quantity_num= $_GET['quantity_num']+1;
+  $sql1 = 'UPDATE shopping_cart SET item_quantity = '.$new_quantity_num.' WHERE customer_id = '.$user_id. ' AND product_id = '.$_GET['product_id'];
+  if (mysqli_query($conn, $sql1)) {
+  unset($_GET['increase']);
+} else {
+  //echo "Error deleting record";
+}
 }
 }
 // decrease the product quantity
