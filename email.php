@@ -47,40 +47,39 @@
 </div>
 
 <?php
+session_start();
 include 'connect.php';
 
 // Check connection
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$user_id = 1;
+
+$sql1= 'SELECT id FROM customers WHERE email = "'.$_SESSION['valid_user'].'"';
+$result1 = mysqli_query($conn, $sql1);
+$row1 = mysqli_fetch_assoc($result1);
+$user_id = $row1['id'];
 
 $to      = 'f34ee@localhost';
 $subject = 'Order Confirmation';
 $message = 'Thanks for your ordering at Phoebe'."\n";
-
 $message .= 'Product Description / Item Price / Quantity'."\n";
-
 $sql = "SELECT product_id, item_quantity FROM shopping_cart WHERE customer_id = ". $user_id;
 $result = mysqli_query($conn, $sql);
+$price = 0;
 
 if (mysqli_num_rows($result)> 0) {
     while($row = mysqli_fetch_array($result)) {
-
       $sql1 = "SELECT name,price,color,category,image1 FROM products WHERE id = ".$row['product_id'];
       $result1 = mysqli_query($conn, $sql1);
       $row1 = mysqli_fetch_assoc($result1);
-      
       $price = $price+$row1['price']*$row['item_quantity'];
-
-
       $message .=  $row1['name'].' / '.$row1['price'].' / '.$row['item_quantity']."\n";
-	
-  	}
+    }
 }
 $message .='Total Price: $'.$price;
 $headers = 
-	'From: f34ee@localhost' . "\r\n" .
+  'From: f34ee@localhost' . "\r\n" .
     'Reply-To: f34ee@localhost' . "\r\n" .
     'X-Mailer: PHP/' . phpversion();
 

@@ -156,7 +156,7 @@ function searchForItemsInCart($user_id,$conn){
       <td> $'.$item_price.' </td>
 
       <td class="right-column" id="quantityform">
-        <a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&decrease=1"><img src="img/minus.jpg"  width="15px" height="15px"></a><input type="text" id="quantity" disabled="disabled" value="'.$row['item_quantity'].'"><a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&increase=1"><img src="img/plus.jpg" width="15px" height="15px"></a>
+        <a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&decrease=1"><img src="img/minus.jpg"  width="15px" height="15px"></a><input type="text" id="quantity" disabled="disabled" size="2" value="'.$row['item_quantity'].'"><a href="cart.php?product_id='.$row['product_id'].'&user_id='.$user_id.'&quantity_num='.$row['item_quantity'].'&increase=1"><img src="img/plus.jpg" width="15px" height="15px"></a>
       </td>
       
       <td> $'.$sub_total.'</td>

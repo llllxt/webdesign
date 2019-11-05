@@ -254,6 +254,9 @@ function inputLesserQuantity(){
 		//if not, we disable add to bag button and show notify me buttom.
 		if ($row['stock']>=1) {
 			echo '
+			    <div> 
+					Stock Quantity: '.$row['stock'].'<br><br>
+				</div>
 				<form  action="detail.php" method="get">
 				<div> 
 					Quantity: <input type="number" min="0" step="1" placeholder="quantity"  name="quantity" id="quantity"> 
