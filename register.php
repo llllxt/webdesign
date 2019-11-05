@@ -16,7 +16,7 @@ $query = 'SELECT * FROM customers WHERE email="' . $email . '"';
 $result = $conn -> query($query);
 $row = $result -> fetch_assoc();
 if($row){
-	echo 'Email already exists';
+	echo '<script> alert("Email already exists"); </script>';
 }else{
 	$query = 'INSERT INTO customers (first_name,last_name,email,password,dateofbirth) VALUES ("'.$firstname .'","' . $lastname . '","' .$email. '","' .$password. '","' .$dateofbirth. '")';
 	$result = $conn -> query($query);
@@ -116,7 +116,7 @@ if($row){
   </form>
     <div class="input-group">
 		<p style="width: 90%; margin-left:0;">
-			Already has an account?<a href="login.php">Sign in</a>
+			Already has an account?<a href="login.php" style="text-decoration: blue underline; color: blue;">Sign in</a>
 		</p>
   </div>
   

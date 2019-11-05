@@ -1,6 +1,6 @@
 <?php
 include 'connect.php';
-if($subcat){
+if($_SESSION['subcat']){
 $query = 'SELECT img1,img2,img3 FROM banner WHERE category="subcat"';
 
 }else{
