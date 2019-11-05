@@ -232,7 +232,7 @@ function inputLesserQuantity(){
 		';
 
 		// if there is no discont for the product, only show the original price
-		if ($row['discount']=1){
+		if ($row['discount']==1){
 			echo '
 				<div> 
 					Price: $'.$row['price'].'<br><br>

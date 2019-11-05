@@ -144,7 +144,8 @@ function searchForItemsInCart($user_id,$conn){
       echo '
       <th>
         <div class="left-column">
-          <img src='.$row1['image1'].' style="width: 120px;height: 120px" />
+        <a herf="detail.php?id='.$row['product_id'].'">
+          <img src='.$row1['image1'].' style="width: 120px;height: 120px" /></a>
         </div>
         <table border="0" class="table">
           <tr><th>'.$row1['name'].'</th> </tr>
