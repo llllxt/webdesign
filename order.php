@@ -96,6 +96,7 @@ if(isset($_POST['checkout'])){
 				//echo "Error: " . $sql0 . "<br>" . mysqli_error($conn);
 			}
 		}
+		include "email.php";
 
 		//delect the items in the shopping cart  -- ok tetsted
 		$sql4 = "DELETE FROM shopping_cart WHERE  customer_id = ".$user_id; 
@@ -109,6 +110,6 @@ if(isset($_POST['checkout'])){
 			}
       		
 }
-include "email.php";
+
 ?>
 
