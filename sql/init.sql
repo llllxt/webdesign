@@ -63,18 +63,7 @@ CREATE TABLE wishlist(
 );
 
 
-INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("John","Smith","JohnSmith@gmail.com","John1234567","1996-05-10"); 
-INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("Tony","Robbins","Tony123@gmail.com","Tony1234567","1960-02-19");
-INSERT INTO customers (first_name, last_name, email, password, dateofbirth) VALUES ("Sara","Bareilles","Sara@gmail.com","Sara1234567@","1980-12-21");
 
-INSERT INTO discount (product_id, discount) VALUES (1,0.9);
-INSERT INTO discount (product_id, discount) VALUES (4,0.8);
-INSERT INTO discount (product_id, discount) VALUES (5,0.7);
-
-INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (1,3,2);
-INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (1,2,1);
-INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (2,3,1);
-INSERT INTO shopping_cart(customer_id,product_id,item_quantity) VALUES (1,5,2);
 
 -- INSERT INTO banner (img1,img2,img3,category) VALUES(
 
@@ -321,6 +310,45 @@ VALUES(
   0.75
 );
 
+
+INSERT INTO banner(img1,img2,img3,category) VALUES(
+	"img/slides/slide1.jpg",
+	"img/slides/slide2.jpg",
+	"img/slides/slide3.jpg",
+	"home"
+),
+(
+	"img/slides/slide_charm1.jpg",
+	"img/slides/slide_charm2.jpg",
+	"img/slides/slide_charm3.jpg",
+	"Charms"
+),
+(
+	"img/slides/slide_ring1.jpg",
+	"img/slides/slide_ring2.jpg",
+	"img/slides/slide_ring3.jpg",
+	"Rings"
+),
+(
+	"img/slides/slide_necklace1.jpg",
+	"img/slides/slide_necklace2.jpg",
+	"img/slides/slide_necklace3.jpg",
+	"Necklaces"
+),
+(
+
+	"img/slides/slide_sale1.jpg",
+	"img/slides/slide_sale2.jpg",
+	"img/slides/slide_sale3.jpg",
+	"Sales"
+),
+(
+	"img/slides/slide_charm2.jpg",
+	"img/slides/slide_sale2.jpg",
+	"img/slides/slide_sale3.jpg",
+	"subcat"
+
+);
 
 
 

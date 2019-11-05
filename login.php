@@ -79,7 +79,7 @@ include 'header.php'; ?>
 			</form>
 			<br>
 			<div>
-				<form action="register.php" method="get">
+			<form action="register.php" method="get">
 				<input style="background-color: #f5f5f5;padding: 5px" class="submitbutton" type="submit" value="CREATE NEW ACCOUNT"><br>
 			</form>
 			</div>

@@ -189,7 +189,7 @@ include 'header.php'; ?>
 			  		<p>Hi '.$_SESSION['firstname'].' '.$_SESSION['lastname'].'!, Welcome to Phoebe.</p>
 			  	</div>
 			  	<div>
-			  	<a href="welcome.php?type="wishlist""><img src="img/account.jpg"></a>
+			  	<a href="welcome.php?type=wishlist "><img src="img/account.jpg"></a>
 			  	</div>
 			  	<br>
 			  	<div style="width:10%; margin-left:auto;margin-right:auto">
